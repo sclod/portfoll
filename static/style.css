@@ -1046,8 +1046,9 @@ a {
 
 .card-body {
   display: grid;
+  align-content: start;
   gap: 24px;
-  flex: 1;
+  margin-bottom: 28px;
 }
 
 @media (min-width: 820px) {
@@ -1127,7 +1128,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 28px;
+  margin-top: auto;
   padding-top: 20px;
   border-top: 1px dashed var(--line-hi);
 }

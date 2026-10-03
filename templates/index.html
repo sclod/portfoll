@@ -116,7 +116,8 @@
 
         <div class="projects">
           {% for p in projects %}
-          <article class="card{% if loop.first %} card-featured{% endif %} reveal" aria-labelledby="p{{ loop.index }}">
+          {# Перша картка на всю ширину; остання теж, якщо інакше лишилася б сама в рядку #}
+          <article class="card{% if loop.first or (loop.last and projects|length is even) %} card-featured{% endif %} reveal" aria-labelledby="p{{ loop.index }}">
             <span class="card-glyph" aria-hidden="true">{{ p.glyph }}</span>
             <header class="card-head">
               <div class="card-meta">

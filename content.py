@@ -15,6 +15,8 @@ CRM_STACK = ["PostgreSQL", "Telegram Bot API", "Linux", "Nginx", "PM2", "TypeScr
 VF_STACK = ["Next.js", "TypeScript", "Prisma", "SQLite", "Leaflet", "Playwright (E2E)"]
 BOTS_STACK = ["Python", "aiogram", "Telegram Bot API", "PostgreSQL", "SQLite", "REST API"]
 VF_CODE_URL = "https://github.com/sclod/vehicleflow-demo"
+SWAP_STACK = ["Next.js", "TypeScript", "Prisma", "SQLite", "Socket.IO", "Zod", "Tailwind CSS"]
+SWAP_CODE_URL = "https://github.com/sclod/swapdesk"
 
 # Поля проєкту (усі, крім title і glyph, необов'язкові):
 #   glyph     — коротка декоративна позначка на фоні картки
@@ -103,6 +105,37 @@ UK = {
             "result": "",
             "code": {"text": "Закритий, тому тільки опис", "url": ""},
             "stack": CRM_STACK,
+        },
+        {
+            "title": "SwapDesk",
+            "glyph": "SWAP",
+            "period": "",
+            "status": {"label": "Демо", "kind": "demo"},
+            "purpose": (
+                "Операційний шар обмінного крипто-сервісу: котирування, життєвий цикл "
+                "замовлень, кабінети клієнтів, чат підтримки й консоль оператора."
+            ),
+            "functions": [
+                "Калькулятор обміну з живими котируваннями та розбивкою комісій",
+                "Сторінка замовлення зі статусами від очікування до завершення, "
+                "адресою депозиту та QR-кодом",
+                "Правила ціноутворення: ручні курси для пар і активів, націнка до ринку, "
+                "ліміти, імпорт і експорт у JSON",
+                "Консоль оператора: замовлення, клієнти, каталог активів",
+                "Чат підтримки в реальному часі на Socket.IO: вкладення, статус "
+                "«прочитано», призначення оператора, експорт розмови",
+                "Кабінет клієнта: профіль, історія замовлень, збережені адреси; вхід "
+                "за паролем або кодом з пошти",
+                "Інтерфейс EN / RU",
+            ],
+            "challenge": "",
+            "result": (
+                "Завершена демо-версія з вигаданим брендом і чистою історією Git — без "
+                "даних клієнтів і конфігурації продакшену. Розрахунки в блокчейні "
+                "свідомо за рамками: це питання ліцензії та провайдера ліквідності, а не коду."
+            ),
+            "code": {"text": "github.com/sclod/swapdesk", "url": SWAP_CODE_URL},
+            "stack": SWAP_STACK,
         },
         {
             "title": "VehicleFlow Demo",
@@ -273,6 +306,38 @@ EN = {
             "result": "",
             "code": {"text": "Closed source, so description only", "url": ""},
             "stack": CRM_STACK,
+        },
+        {
+            "title": "SwapDesk",
+            "glyph": "SWAP",
+            "period": "",
+            "status": {"label": "Demo", "kind": "demo"},
+            "purpose": (
+                "The operational layer of a crypto exchange desk: quotes, order lifecycle, "
+                "customer accounts, support chat and an operator console."
+            ),
+            "functions": [
+                "Swap calculator with live quotes and a fee breakdown",
+                "Order page with statuses from waiting to completed, a deposit address "
+                "and a QR code",
+                "Pricing rules: manual rates for pairs and assets, markup over market, "
+                "limits, JSON import and export",
+                "Operator console: orders, customers, asset catalogue",
+                "Real-time support chat on Socket.IO: attachments, read receipts, "
+                "agent assignment, transcript export",
+                "Customer account: profile, order history, saved addresses; sign-in "
+                "with a password or an email code",
+                "EN / RU interface",
+            ],
+            "challenge": "",
+            "result": (
+                "Completed demo with a fictional brand and a clean Git history — no "
+                "customer data and no production configuration. On-chain settlement is "
+                "deliberately out of scope: that's a licensing and liquidity-provider "
+                "question, not a code one."
+            ),
+            "code": {"text": "github.com/sclod/swapdesk", "url": SWAP_CODE_URL},
+            "stack": SWAP_STACK,
         },
         {
             "title": "VehicleFlow Demo",
