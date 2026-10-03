@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="uk" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="canonical" href="{{ site_url }}">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0e1116">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ site.title }}">
+  <meta property="og:description" content="{{ site.description }}">
+  <meta property="og:url" content="{{ site_url }}">
+  <meta property="og:image" content="{{ site_url }}og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ site.name }} — {{ hero.lead }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <script>
+    try { if (localStorage.getItem("theme") === "light") document.documentElement.dataset.theme = "light"; } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="style.css?v={{ css_v }}">
+  <script src="theme.js?v={{ js_v }}" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти до вмісту</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">{{ site.name }}</a>
+      <nav class="nav" aria-label="Розділи сторінки">
+        <a href="#projects">Проєкти</a>
+        <a href="#stack">Стек</a>
+        <a href="#about">Про мене</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+      <button class="theme-toggle" type="button" hidden aria-pressed="false">
+        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
+        <span class="visually-hidden">Світла тема</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="eyebrow">{{ site.role }} · {{ site.city }}</p>
+        <h1 id="hero-title">{{ site.name }}</h1>
+        <p class="hero-lead">{{ hero.lead }}</p>
+        <p class="hero-text">{{ hero.text }}</p>
+        <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
+          Написати
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <h2 class="section-title" id="projects-title">Проєкти</h2>
+        <div class="projects">
+          {% for p in projects %}
+          <article class="project" aria-labelledby="project-{{ loop.index }}">
+            <header class="project-head">
+              <div class="project-meta">
+                {% if p.period %}<span class="project-period">{{ p.period }}</span>{% endif %}
+                {% for b in p.badges %}<span class="badge">{{ b }}</span>{% endfor %}
+              </div>
+              <h3 class="project-title" id="project-{{ loop.index }}">{{ p.title }}</h3>
+            </header>
+
+            <div class="project-body">
+              <div class="project-block project-task">
+                <h4>Задача</h4>
+                <p>{{ p.task }}</p>
+              </div>
+              <div class="project-block project-built">
+                <h4>Що зроблено</h4>
+                <ul class="checklist">
+                  {% for item in p.built %}
+                  <li>{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% if p.challenge %}
+              <div class="project-block project-challenge">
+                <h4>Що було складним</h4>
+                <p>{{ p.challenge }}</p>
+              </div>
+              {% endif %}
+              <div class="project-block project-result">
+                <h4>Результат</h4>
+                <p>{{ p.result }}</p>
+              </div>
+            </div>
+
+            <footer class="project-foot">
+              <ul class="tags" aria-label="Стек">
+                {% for t in p.stack %}
+                <li>{{ t }}</li>
+                {% endfor %}
+              </ul>
+              {% for l in p.links %}
+              <a class="project-link" href="{{ l.url }}" rel="noopener">{{ l.label }} <span aria-hidden="true">→</span></a>
+              {% endfor %}
+            </footer>
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <div class="container">
+        <h2 class="section-title" id="stack-title">Стек</h2>
+        <div class="stack">
+          {% for level in stack %}
+          <div class="stack-level stack-level-{{ loop.index }}">
+            <h3>{{ level.level }}</h3>
+            {% if level.note %}<p class="stack-note">{{ level.note }}</p>{% endif %}
+            <ul class="tags">
+              {% for item in level["items"] %}
+              <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="strengths" aria-labelledby="strengths-title">
+      <div class="container">
+        <h2 class="section-title" id="strengths-title">Сильні сторони</h2>
+        <ul class="strengths">
+          {% for s in strengths %}
+          <li>
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.text }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container about">
+        <div>
+          <h2 class="section-title" id="about-title">Коротко про мене</h2>
+          {% for para in about.paragraphs %}
+          <p>{{ para }}</p>
+          {% endfor %}
+        </div>
+        <div>
+          <h3 class="subhead">Освіта та мова</h3>
+          <dl class="education">
+            {% for e in about.education %}
+            <div>
+              <dt>{{ e.title }}</dt>
+              <dd>{{ e.text }}</dd>
+            </div>
+            {% endfor %}
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="contacts">
+    <div class="container footer-inner">
+      <h2 class="footer-title">Контакти</h2>
+      <ul class="contacts">
+        <li><span class="contact-label">Telegram</span> <a href="{{ contacts.telegram.url }}" rel="noopener">{{ contacts.telegram.handle }}</a></li>
+        <li><span class="contact-label">GitHub</span> <a href="{{ contacts.github.url }}" rel="noopener">{{ contacts.github.handle }}</a></li>
+      </ul>
+      <p class="copyright">© {{ year }} {{ site.name }}</p>
+    </div>
+  </footer>
+</body>
+</html>
