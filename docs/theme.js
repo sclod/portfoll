@@ -12,7 +12,7 @@
     root.dataset.theme = theme;
     name.textContent = light ? "світла" : "темна";
     hint.textContent = light ? ". Увімкнути темну" : ". Увімкнути світлу";
-    if (meta) meta.content = light ? "#f3f3f0" : "#111316";
+    if (meta) meta.content = light ? "#f4f6fb" : "#07090d";
   }
 
   apply(root.dataset.theme === "light" ? "light" : "dark");

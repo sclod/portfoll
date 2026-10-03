@@ -8,26 +8,41 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const favicon = readFileSync(root + "static/favicon.svg", "utf8");
 
-const og = `<!doctype html><html lang="uk"><meta charset="utf-8"><style>
-  body { margin: 0; width: 1200px; height: 630px; background: #111316; color: #e4e6e9;
-         font-family: system-ui, sans-serif; box-sizing: border-box; padding: 0 88px; display: flex; flex-direction: column; justify-content: center; }
-  .mono { font-family: ui-monospace, "DejaVu Sans Mono", monospace; }
-  h1 { font-size: 76px; margin: 0 0 24px; letter-spacing: -1.5px; line-height: 1.05; }
-  p { font-size: 34px; line-height: 1.35; margin: 0 0 48px; max-width: 980px; }
-  dl { display: grid; grid-template-columns: 1fr 1fr; column-gap: 48px; margin: 0; }
-  dl div { display: grid; grid-template-columns: 150px 1fr; border-top: 2px solid #2c3137; padding: 18px 0; }
-  dt { color: #9ba3ad; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; padding-top: 6px; }
-  dd { margin: 0; font-size: 30px; }
-  .status { color: #5fcf8a; }
+// Шрифти вбудовуються як data: URL — Chromium не вантажить шрифти з file://.
+const font = (family, file, weight) => {
+  const data = readFileSync(root + "static/fonts/" + file).toString("base64");
+  return `@font-face { font-family: "${family}"; font-weight: ${weight}; src: url(data:font/woff2;base64,${data}) format("woff2"); }`;
+};
+const fonts = [
+  font("Unbounded", "unbounded-cyrillic.woff2", "500 800"), font("Unbounded", "unbounded-latin.woff2", "500 800"),
+  font("Manrope", "manrope-cyrillic.woff2", "400 700"), font("Manrope", "manrope-latin.woff2", "400 700"),
+  font("JetBrains Mono", "jetbrains-mono-cyrillic.woff2", "400 600"), font("JetBrains Mono", "jetbrains-mono-latin.woff2", "400 600"),
+].join("\n");
+
+const og = `<!doctype html><html lang="uk"><meta charset="utf-8"><style>${fonts}
+  body { margin: 0; width: 1200px; height: 630px; overflow: hidden; position: relative; background: #07090d; color: #e9edf4;
+         font-family: "Manrope", sans-serif; box-sizing: border-box; padding: 0 80px; display: flex; flex-direction: column; justify-content: center; }
+  body::before { content: ""; position: absolute; inset: 0; z-index: -1;
+         background: radial-gradient(circle at 10% 0%, rgba(79,224,240,.18), transparent 45%), radial-gradient(circle at 95% 100%, rgba(185,140,255,.2), transparent 50%),
+                     radial-gradient(rgba(160,180,210,.13) 1px, transparent 1.4px) 0 0 / 26px 26px; }
+  .c { font-family: "JetBrains Mono", monospace; color: #8591a6; font-size: 26px; margin-bottom: 22px; }
+  h1 { font-family: "Unbounded", sans-serif; font-size: 80px; font-weight: 700; line-height: 1.04; letter-spacing: -2px; margin: 0 0 30px; }
+  h1 span { display: block; background: linear-gradient(100deg, #4fe0f0, #7aa7ff 45%, #b98cff); -webkit-background-clip: text; color: transparent; }
+  p { font-size: 32px; line-height: 1.4; margin: 0; max-width: 700px; font-weight: 500; }
+  b { font-weight: 700; background: linear-gradient(100deg, #4fe0f0, #b98cff) no-repeat 0 100% / 100% 3px; }
+  .fn { font-family: "JetBrains Mono", monospace; color: #82adff; font-size: .9em; }
+  .scene { position: absolute; right: 120px; top: 50%; width: 200px; height: 200px; margin-top: -100px; perspective: 900px; }
+  .cube { width: 200px; height: 200px; position: relative; transform-style: preserve-3d; transform: rotateX(-24deg) rotateY(-38deg); }
+  .f { position: absolute; inset: 0; display: grid; place-items: center; border: 1.5px solid rgba(122,200,255,.6); border-radius: 8px;
+       background: linear-gradient(135deg, rgba(79,224,240,.25), rgba(185,140,255,.16)), rgba(14,19,27,.75);
+       font-family: "Unbounded", sans-serif; font-size: 34px; font-weight: 700; box-shadow: inset 0 0 40px rgba(79,224,240,.2); }
+  .f1 { transform: translateZ(100px); } .f2 { transform: rotateY(90deg) translateZ(100px); } .f3 { transform: rotateX(90deg) translateZ(100px); }
+  .ring { position: absolute; left: -110px; top: -110px; width: 420px; height: 420px; border: 1.5px solid rgba(79,224,240,.35); border-radius: 50%; transform: rotateX(74deg) rotateY(-8deg); }
 </style><body>
-  <h1>Данііл Репецький</h1>
-  <p>Роблю внутрішні системи для бізнесу — CRM, телеграм-боти, інтеграції, автоматизацію рутини.</p>
-  <dl>
-    <div><dt class="mono">Рівень</dt><dd>Strong Junior</dd></div>
-    <div><dt class="mono">Місто</dt><dd>Київ</dd></div>
-    <div><dt class="mono">База</dt><dd>Python, SQL</dd></div>
-    <div><dt class="mono">CRM</dt><dd class="status">● у продакшені</dd></div>
-  </dl>
+  <div class="c">// розробник · Київ</div>
+  <h1>Данііл <span>Репецький</span></h1>
+  <p>Роблю <b>внутрішні системи для бізнесу</b>. База — <span class="fn">Python</span> і <span class="fn">SQL</span>.</p>
+  <div class="scene"><div class="ring"></div><div class="cube"><div class="f f1">CRM</div><div class="f f2">BOT</div><div class="f f3">SQL</div></div></div>
 </body></html>`;
 
 const icon = (size) =>
@@ -38,6 +53,7 @@ const page = await browser.newPage();
 
 await page.setViewportSize({ width: 1200, height: 630 });
 await page.setContent(og);
+await page.evaluate(() => document.fonts.ready);
 await page.screenshot({ path: root + "static/og.png" });
 
 for (const [size, name] of [[32, "favicon-32.png"], [180, "apple-touch-icon.png"]]) {

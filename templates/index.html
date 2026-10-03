@@ -1,4 +1,4 @@
-{% macro items(list) %}{% for t in list %}<span class="item">{{ t }}</span>{% if not loop.last %} · {% endif %}{% endfor %}{% endmacro %}
+{% macro chips(list) %}<ul class="chips">{% for t in list %}<li>{{ t }}</li>{% endfor %}</ul>{% endmacro %}
 <!doctype html>
 <html lang="uk" data-theme="dark">
 <head>
@@ -8,7 +8,7 @@
   <meta name="description" content="{{ site.description }}">
   <link rel="canonical" href="{{ site_url }}">
   <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#111316">
+  <meta name="theme-color" content="#07090d">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uk_UA">
@@ -26,6 +26,9 @@
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
+  <link rel="preload" href="fonts/unbounded-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+
   <script>
     try { if (localStorage.getItem("theme") === "light") document.documentElement.dataset.theme = "light"; } catch (e) {}
   </script>
@@ -33,11 +36,18 @@
   <script src="theme.js?v={{ js_v }}" defer></script>
 </head>
 <body>
+  <div class="backdrop" aria-hidden="true">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+    <div class="dots"></div>
+    <div class="noise"></div>
+  </div>
+
   <a class="skip-link" href="#main">Перейти до вмісту</a>
 
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <a class="brand" href="#top">{{ site.name }}</a>
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">ДР</span>{{ site.name }}</a>
       <nav class="nav" aria-label="Розділи сторінки">
         <a href="#projects">Проєкти</a>
         <a href="#stack">Стек</a>
@@ -46,118 +56,158 @@
         <a href="#contacts">Контакти</a>
       </nav>
       <button class="theme-toggle" type="button" hidden>
-        Тема: <span class="theme-name">темна</span><span class="visually-hidden">. Увімкнути світлу</span>
+        <span class="t-comment" aria-hidden="true">theme:</span> <span class="theme-name">темна</span><span class="visually-hidden">. Увімкнути світлу</span>
       </button>
     </div>
   </header>
 
   <main id="main">
-    <section class="record" id="top" aria-labelledby="name">
-      <div class="wrap">
-        <div class="record-head">
-          <h1 id="name">{{ site.name }}</h1>
-          <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">Написати <span aria-hidden="true">→</span><span class="visually-hidden">в Telegram</span></a>
+    <section class="hero" id="top" aria-labelledby="name">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="kicker"><span class="t-comment">// розробник · Київ</span></p>
+          <h1 id="name"><span class="name-first">Данііл</span> <span class="name-last">Репецький</span></h1>
+          <p class="lead">{{ hero.lead|hl }}</p>
+          <p class="lead-text">{{ hero.text|hl }}</p>
+          <div class="hero-actions">
+            <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">
+              Написати
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span class="visually-hidden">в Telegram</span>
+            </a>
+            <span class="handle">Telegram {{ contacts.telegram.handle }}</span>
+          </div>
         </div>
-        <p class="lead">{{ hero.lead }}</p>
-        <p class="lead-text">{{ hero.text }}</p>
-        <dl class="fields fields-grid">
-          {% for f in hero.fields %}
-          <div class="field">
-            <dt>{{ f.label }}</dt>
-            <dd>{{ f.value }}</dd>
+
+        <div class="hero-visual" aria-hidden="true">
+          <div class="floor"></div>
+          <div class="scene">
+            <div class="orbit orbit-a"><span class="sat"></span></div>
+            <div class="orbit orbit-b"><span class="sat"></span></div>
+            <div class="spinner">
+              <div class="cube">
+                <div class="face face-front"><b>CRM</b><i>PostgreSQL</i></div>
+                <div class="face face-back"><b>LOGS</b><i>troubleshooting</i></div>
+                <div class="face face-right"><b>BOT</b><i>aiogram</i></div>
+                <div class="face face-left"><b>API</b><i>REST</i></div>
+                <div class="face face-top"><b>SQL</b><i>schema</i></div>
+                <div class="face face-bottom"><b>LINUX</b><i>Nginx · PM2</i></div>
+              </div>
+            </div>
+            <div class="wire">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <span class="bit bit-1"></span>
+            <span class="bit bit-2"></span>
+            <span class="bit bit-3"></span>
           </div>
-          {% endfor %}
-          <div class="field">
-            <dt>Зв'язок</dt>
-            <dd><a href="{{ contacts.telegram.url }}" rel="noopener">Telegram {{ contacts.telegram.handle }}</a></dd>
-          </div>
-        </dl>
+        </div>
+
+        <figure class="code-card">
+          <figcaption class="code-tab"><span class="code-file">about.py</span><span class="code-lang">python</span></figcaption>
+          <pre class="code"><code>{% for line in hero.code|code_lines %}<span class="line"><span class="ln" aria-hidden="true">{{ loop.index }}</span>{{ line }}{% if loop.last %}<span class="caret" aria-hidden="true"></span>{% endif %}</span>{% endfor %}</code></pre>
+        </figure>
       </div>
     </section>
 
     <section class="section" id="projects" aria-labelledby="projects-title">
       <div class="wrap">
-        <div class="section-head">
+        <header class="section-head">
+          <p class="section-label"><span class="t-comment">// {{ projects|length }} {{ plural(projects|length, "запис", "записи", "записів") }}</span></p>
           <h2 id="projects-title">Проєкти</h2>
-          <span class="count">{{ projects|length }} {{ plural(projects|length, "запис", "записи", "записів") }}</span>
-        </div>
+        </header>
 
-        {% for p in projects %}
-        <article class="card" aria-labelledby="p{{ loop.index }}">
-          <header class="card-head">
-            <h3 id="p{{ loop.index }}">{{ p.title }}</h3>
-            {% if p.status %}<span class="status status-{{ p.status.kind }}">{{ p.status.label }}</span>{% endif %}
-          </header>
-          <dl class="fields card-body">
-            {% if p.period %}
-            <div class="field"><dt>Період</dt><dd class="mono">{{ p.period }}</dd></div>
-            {% endif %}
-            {% if p.purpose %}
-            <div class="field"><dt>Призначення</dt><dd>{{ p.purpose }}</dd></div>
-            {% endif %}
-            {% if p.functions %}
-            <div class="field">
-              <dt>Що зроблено</dt>
-              <dd>
-                <ul class="list">
+        <div class="projects">
+          {% for p in projects %}
+          <article class="card{% if loop.first %} card-featured{% endif %} reveal" aria-labelledby="p{{ loop.index }}">
+            <span class="card-glyph" aria-hidden="true">{{ p.glyph }}</span>
+            <header class="card-head">
+              <div class="card-meta">
+                <span class="card-index">{{ "%02d"|format(loop.index) }}<span class="t-comment">/{{ "%02d"|format(projects|length) }}</span></span>
+                {% if p.status %}<span class="status status-{{ p.status.kind }}"><span class="pulse"></span>{{ p.status.label }}</span>{% endif %}
+                {% if p.period %}<span class="period t-num">{{ p.period }}</span>{% endif %}
+              </div>
+              <h3 id="p{{ loop.index }}">{{ p.title }}</h3>
+            </header>
+
+            <div class="card-body">
+              {% if p.purpose or p.challenge or p.result or (p.code and not p.code.url) %}
+              <div class="card-main">
+                {% if p.purpose %}<p class="purpose">{{ p.purpose|hl }}</p>{% endif %}
+                {% if p.challenge %}
+                <h4 class="mini">Що було складним</h4>
+                <p>{{ p.challenge|hl }}</p>
+                {% endif %}
+                {% if p.result %}
+                <h4 class="mini">Результат</h4>
+                <p>{{ p.result|hl }}</p>
+                {% endif %}
+                {% if p.code and not p.code.url %}
+                <p class="closed"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Код: {{ p.code.text }}</p>
+                {% endif %}
+              </div>
+              {% endif %}
+              <div class="card-list">
+                <h4 class="mini">Що зроблено</h4>
+                <ul class="arrows">
                   {% for f in p.functions %}
-                  <li>{{ f }}</li>
+                  <li>{{ f|hl }}</li>
                   {% endfor %}
                 </ul>
-              </dd>
+              </div>
             </div>
-            {% endif %}
-            {% if p.challenge %}
-            <div class="field"><dt>Що було складним</dt><dd>{{ p.challenge }}</dd></div>
-            {% endif %}
-            {% if p.result %}
-            <div class="field"><dt>Результат</dt><dd>{{ p.result }}</dd></div>
-            {% endif %}
-            {% if p.code %}
-            <div class="field">
-              <dt>Код</dt>
-              <dd>{% if p.code.url %}<a href="{{ p.code.url }}" rel="noopener">{{ p.code.text }}</a>{% else %}{{ p.code.text }}{% endif %}</dd>
-            </div>
-            {% endif %}
-            <div class="field"><dt>Стек</dt><dd class="mono">{{ items(p.stack) }}</dd></div>
-          </dl>
-        </article>
-        {% endfor %}
+
+            <footer class="card-foot">
+              {{ chips(p.stack) }}
+              {% if p.code and p.code.url %}
+              <a class="card-link" href="{{ p.code.url }}" rel="noopener">Код на GitHub <span aria-hidden="true">↗</span></a>
+              {% endif %}
+            </footer>
+          </article>
+          {% endfor %}
+        </div>
       </div>
     </section>
 
     <section class="section" id="stack" aria-labelledby="stack-title">
       <div class="wrap">
-        <div class="section-head">
+        <header class="section-head">
+          <p class="section-label"><span class="t-comment">// від фундаменту до надбудови</span></p>
           <h2 id="stack-title">Стек</h2>
-        </div>
-        <table class="matrix">
-          <thead>
-            <tr><th scope="col">Рівень</th><th scope="col">Технології</th></tr>
-          </thead>
-          <tbody>
+        </header>
+
+        <div class="stack">
+          <div class="stack-visual" aria-hidden="true">
+            <div class="iso">
+              {% for level in stack %}
+              <div class="slab slab-{{ loop.index }}"><span>{{ level.level }}</span></div>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="stack-rows">
             {% for level in stack %}
-            <tr>
-              <th scope="row">
-                {{ level.level }}
-                {% if level.note %}<span class="note">{{ level.note }}</span>{% endif %}
-              </th>
-              <td class="mono">{{ items(level["items"]) }}</td>
-            </tr>
+            <div class="stack-row row-{{ loop.index }} reveal">
+              <div class="row-head">
+                <h3><span class="row-dot"></span>{{ level.level }}</h3>
+                {% if level.note %}<p class="note">{{ level.note|hl }}</p>{% endif %}
+              </div>
+              {{ chips(level["items"]) }}
+            </div>
             {% endfor %}
-          </tbody>
-        </table>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="section" id="strengths" aria-labelledby="strengths-title">
       <div class="wrap">
-        <div class="section-head">
+        <header class="section-head">
+          <p class="section-label"><span class="t-comment">// як я працюю</span></p>
           <h2 id="strengths-title">Сильні сторони</h2>
-        </div>
-        <ol class="numbered">
+        </header>
+        <ol class="strengths">
           {% for s in strengths %}
-          <li>{{ s }}</li>
+          <li class="reveal"><span class="strength-n" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span><p>{{ s|hl }}</p></li>
           {% endfor %}
         </ol>
       </div>
@@ -165,36 +215,53 @@
 
     <section class="section" id="about" aria-labelledby="about-title">
       <div class="wrap">
-        <div class="section-head">
+        <header class="section-head">
+          <p class="section-label"><span class="t-comment">// коротко</span></p>
           <h2 id="about-title">Про мене</h2>
+        </header>
+        <div class="about">
+          <div class="about-main reveal">
+            <blockquote class="quote"><p>{{ about.text|hl }}</p></blockquote>
+            <dl class="facts">
+              {% for f in about.fields %}
+              <div><dt>{{ f.label }}</dt><dd>{{ f.value|hl }}</dd></div>
+              {% endfor %}
+            </dl>
+          </div>
+          <div class="about-log reveal">
+            <h3 class="mini">Журнал</h3>
+            <ol class="log">
+              {% for e in about.log %}
+              <li><span class="log-date">{{ e.date|hl }}</span><span class="log-event">{{ e.event|hl }}</span></li>
+              {% endfor %}
+            </ol>
+          </div>
         </div>
-        <p class="about-text">{{ about.text }}</p>
-        <dl class="fields">
-          {% for f in about.fields %}
-          <div class="field"><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
-          {% endfor %}
-        </dl>
-        <h3 class="subhead">Журнал</h3>
-        <ol class="log">
-          {% for e in about.log %}
-          <li><span class="log-date">{{ e.date }}</span> <span class="log-event">{{ e.event }}</span></li>
-          {% endfor %}
-        </ol>
       </div>
     </section>
   </main>
 
   <footer class="footer" id="contacts">
+    <div class="globe" aria-hidden="true">
+      <div class="globe-spin"><span></span><span></span><span></span><span></span><span></span><span></span><i></i><i></i></div>
+    </div>
     <div class="wrap">
-      <div class="section-head">
+      <header class="section-head">
+        <p class="section-label"><span class="t-comment">// зв'язок</span></p>
         <h2>Контакти</h2>
-      </div>
-      <dl class="fields">
+      </header>
+      <ul class="contacts">
         {% for c in contacts.values() %}
-        <div class="field"><dt>{{ c.label }}</dt><dd><a href="{{ c.url }}" rel="noopener">{{ c.handle }}</a></dd></div>
+        <li>
+          <a href="{{ c.url }}" rel="noopener">
+            <span class="contact-label">{{ c.label }}</span>
+            <span class="contact-handle">{{ c.handle }}</span>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </li>
         {% endfor %}
-      </dl>
-      <p class="copyright">© {{ year }} {{ site.name }}</p>
+      </ul>
+      <p class="copyright"><span class="t-comment">©</span> {{ year }} {{ site.name }}</p>
     </div>
   </footer>
 </body>
