@@ -39,7 +39,6 @@ const og = (t) => `<!doctype html><html lang="${t.lang}"><meta charset="utf-8"><
   .f1 { transform: translateZ(100px); } .f2 { transform: rotateY(90deg) translateZ(100px); } .f3 { transform: rotateX(90deg) translateZ(100px); }
   .ring { position: absolute; left: -110px; top: -110px; width: 420px; height: 420px; border: 1.5px solid rgba(79,224,240,.35); border-radius: 50%; transform: rotateX(74deg) rotateY(-8deg); }
 </style><body>
-  <div class="c">${t.kicker}</div>
   <h1>${t.h1a} <span>${t.h1b}</span></h1>
   <p>${t.text}</p>
   <div class="scene"><div class="ring"></div><div class="cube"><div class="f f1">CRM</div><div class="f f2">BOT</div><div class="f f3">SQL</div></div></div>
@@ -51,11 +50,11 @@ const icon = (size) =>
 const browser = await chromium.launch();
 const page = await browser.newPage();
 
-// Тексти — ті самі, що в content.py (kicker, h1, lead).
+// Тексти — ті самі, що в content.py (h1, lead).
 const ogTexts = [
-  { file: "og.png", lang: "uk", kicker: "// розробник · Strong Junior · Київ", h1a: "Внутрішні системи", h1b: "для бізнесу",
+  { file: "og.png", lang: "uk", h1a: "Внутрішні системи", h1b: "для бізнесу",
     text: 'CRM, телеграм-боти, інтеграції. База — <span class="fn">Python</span> і <span class="fn">SQL</span>.' },
-  { file: "og-en.png", lang: "en", kicker: "// developer · Strong Junior · Kyiv", h1a: "Internal systems", h1b: "for business",
+  { file: "og-en.png", lang: "en", h1a: "Internal systems", h1b: "for business",
     text: 'CRM, Telegram bots, integrations. Core: <span class="fn">Python</span> and <span class="fn">SQL</span>.' },
 ];
 

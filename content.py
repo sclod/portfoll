@@ -7,7 +7,6 @@
 
 CONTACTS = {
     "telegram": {"label": "Telegram", "handle": "@D0SIDE0", "url": "https://t.me/D0SIDE0"},
-    "github": {"label": "GitHub", "handle": "github.com/sclod", "url": "https://github.com/sclod"},
 }
 
 # Стек проєктів однаковий для обох мов.
@@ -50,10 +49,8 @@ UK = {
             "stack": "Стек",
             "strengths": "Сильні сторони",
             "about": "Про мене",
-            "contacts": "Контакти",
         },
         "lang_switch": {"label": "EN", "title": "English version", "href": "en/", "hreflang": "en"},
-        "kicker": "// розробник · Strong Junior · Київ",
         "h1": ["Внутрішні системи", "для бізнесу"],
         "cta": "Написати",
         "cta_sr": "в Telegram",
@@ -61,7 +58,6 @@ UK = {
         "stack_label": "// від фундаменту до надбудови",
         "strengths_label": "// як я працюю",
         "about_label": "// коротко",
-        "contacts_label": "// зв'язок",
         "built": "Що зроблено",
         "challenge": "Що було складним",
         "result": "Результат",
@@ -252,10 +248,8 @@ EN = {
             "stack": "Stack",
             "strengths": "Strengths",
             "about": "About",
-            "contacts": "Contacts",
         },
         "lang_switch": {"label": "UA", "title": "Українська версія", "href": "../", "hreflang": "uk"},
-        "kicker": "// developer · Strong Junior · Kyiv",
         "h1": ["Internal systems", "for business"],
         "cta": "Message me",
         "cta_sr": "on Telegram",
@@ -263,7 +257,6 @@ EN = {
         "stack_label": "// from the foundation up",
         "strengths_label": "// how I work",
         "about_label": "// in short",
-        "contacts_label": "// get in touch",
         "built": "What I built",
         "challenge": "What was hard",
         "result": "Result",

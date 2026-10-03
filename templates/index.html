@@ -62,7 +62,6 @@
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="kicker"><span class="t-comment">{{ ui.kicker }}</span></p>
           <h1 id="hero-title"><span class="h1-a">{{ ui.h1[0] }}</span> <span class="h1-b">{{ ui.h1[1] }}</span></h1>
           <p class="lead">{{ hero.lead|hl }}</p>
           <p class="lead-text">{{ hero.text|hl }}</p>
@@ -239,26 +238,8 @@
     </section>
   </main>
 
-  <footer class="footer" id="contacts">
-    <div class="globe" aria-hidden="true">
-      <div class="globe-spin"><span></span><span></span><span></span><span></span><span></span><span></span><i></i><i></i></div>
-    </div>
+  <footer class="footer">
     <div class="wrap">
-      <header class="section-head">
-        <p class="section-label"><span class="t-comment">{{ ui.contacts_label }}</span></p>
-        <h2>{{ ui.nav.contacts }}</h2>
-      </header>
-      <ul class="contacts">
-        {% for c in contacts.values() %}
-        <li>
-          <a href="{{ c.url }}" rel="noopener">
-            <span class="contact-label">{{ c.label }}</span>
-            <span class="contact-handle">{{ c.handle }}</span>
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
       <p class="copyright"><span class="t-comment">©</span> {{ year }}</p>
     </div>
   </footer>
