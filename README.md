@@ -1,14 +1,14 @@
 # portfoll
 
-Особистий сайт-портфоліо. Одна сторінка, статичний HTML, роздається через GitHub Pages з папки `docs/`.
+Особистий сайт-портфоліо. Одна сторінка українською (`/`) та англійською (`/en/`), статичний HTML без JavaScript, роздається через GitHub Pages з папки `docs/`.
 
 ## Структура
 
-- `content.py` — увесь текст сайту (проєкти, стек, контакти)
+- `content.py` — увесь текст сайту обома мовами (`UK`, `EN`): проєкти, стек, контакти
 - `templates/index.html` — шаблон Jinja2
-- `static/` — CSS, переключатель теми, іконки, Open Graph картинка; копіюється в `docs/` як є
+- `static/` — CSS, шрифти, іконки, Open Graph картинки; копіюється в `docs/` як є
 - `build.py` — збирає `docs/`
-- `tools/render_images.mjs` — необов'язково: перегенерувати `og.png` та PNG-іконки (Node.js + Playwright)
+- `tools/render_images.mjs` — необов'язково: перегенерувати `og.png`, `og-en.png` та PNG-іконки (Node.js + Playwright)
 
 ## Збірка
 

@@ -33,8 +33,10 @@ def file_hash(path: Path) -> str:
 
 def tech_terms() -> list[str]:
     """Назви технологій з контенту: «aiogram / Telegram Bot API» → «aiogram», «Telegram Bot API»."""
-    raw = [t for level in content.STACK for t in level["items"]]
-    raw += [t for p in content.PROJECTS for t in p["stack"]]
+    raw = []
+    for lang in content.LANGS:
+        raw += [t for level in lang["stack"] for t in level["items"]]
+        raw += [t for p in lang["projects"] for t in p["stack"]]
     terms = {"Telegram", "Claude"}
     for item in raw:
         for part in re.split(r"[,/]", re.sub(r"\(.*?\)", "", item)):
@@ -47,8 +49,7 @@ def tech_terms() -> list[str]:
 # Підсвітка як у редакторі коду: колір означає тип, а не прикрасу.
 # Порядок важливий — перше правило, що збіглося, виграє.
 HIGHLIGHT_RULES = [
-    ("em", ["внутрішні системи для бізнесу"]),
-    ("str", ["у продакшені", "в проді", "дотепер"]),
+    ("str", ["у продакшені", "в проді", "дотепер", "in production", "present"]),
     ("kw", ["Strong Junior"]),
     ("type", ["ADMIN", "OPERATOR", "VIEWER"]),
     ("fn", tech_terms()),
@@ -96,8 +97,10 @@ def code_lines(pairs) -> list[Markup]:
     return [Markup(line) for line in lines]
 
 
-def plural(n: int, one: str, few: str, many: str) -> str:
-    """Українська множина: 1 запис, 3 записи, 5 записів."""
+def plural(n: int, forms: tuple[str, str, str]) -> str:
+    """Множина за українськими правилами: 1 запис, 3 записи, 5 записів.
+    Для англійської форми «few» і «many» однакові, тож правило підходить і їй."""
+    one, few, many = forms
     if n % 10 == 1 and n % 100 != 11:
         return one
     if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
@@ -129,22 +132,27 @@ def build() -> None:
     env.globals["plural"] = plural
     env.filters["hl"] = highlight
     env.filters["code_lines"] = code_lines
-    html = env.get_template("index.html").render(
-        site=content.SITE,
-        contacts=content.CONTACTS,
-        hero=content.HERO,
-        projects=content.PROJECTS,
-        stack=content.STACK,
-        strengths=content.STRENGTHS,
-        about=content.ABOUT,
-        site_url=SITE_URL.rstrip("/") + "/",
-        year=datetime.date.today().year,
-        # Версії для скидання кешу браузера після змін.
-        css_v=file_hash(STATIC / "style.css"),
-        js_v=file_hash(STATIC / "theme.js"),
-    )
-    (OUT / "index.html").write_text(html, encoding="utf-8")
-    print(f"Зібрано: {OUT.relative_to(ROOT)}/index.html")
+    site_url = SITE_URL.rstrip("/") + "/"
+    pages = {"uk": OUT / "index.html", "en": OUT / "en" / "index.html"}
+    for lang in content.LANGS:
+        code = lang["lang"]
+        out = pages[code]
+        out.parent.mkdir(parents=True, exist_ok=True)
+        # Шлях від сторінки до кореня сайту — для CSS, шрифтів та іконок.
+        root = "" if code == "uk" else "../"
+        html = env.get_template("index.html").render(
+            **lang,
+            contacts=content.CONTACTS,
+            root=root,
+            site_url=site_url,
+            page_url=site_url + ("" if code == "uk" else "en/"),
+            alternates={"uk": site_url, "en": site_url + "en/"},
+            year=datetime.date.today().year,
+            # Версія для скидання кешу браузера після змін.
+            css_v=file_hash(STATIC / "style.css"),
+        )
+        out.write_text(html, encoding="utf-8")
+        print(f"Зібрано: {out.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
