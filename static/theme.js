@@ -2,13 +2,17 @@
 (function () {
   var root = document.documentElement;
   var button = document.querySelector(".theme-toggle");
-  var meta = document.querySelector('meta[name="theme-color"]');
   if (!button) return;
+  var name = button.querySelector(".theme-name");
+  var hint = button.querySelector(".visually-hidden");
+  var meta = document.querySelector('meta[name="theme-color"]');
 
   function apply(theme) {
+    var light = theme === "light";
     root.dataset.theme = theme;
-    button.setAttribute("aria-pressed", String(theme === "light"));
-    if (meta) meta.content = theme === "light" ? "#f7f7f4" : "#0e1116";
+    name.textContent = light ? "світла" : "темна";
+    hint.textContent = light ? ". Увімкнути темну" : ". Увімкнути світлу";
+    if (meta) meta.content = light ? "#f3f3f0" : "#111316";
   }
 
   apply(root.dataset.theme === "light" ? "light" : "dark");

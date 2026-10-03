@@ -1,3 +1,4 @@
+{% macro items(list) %}{% for t in list %}<span class="item">{{ t }}</span>{% if not loop.last %} · {% endif %}{% endfor %}{% endmacro %}
 <!doctype html>
 <html lang="uk" data-theme="dark">
 <head>
@@ -7,7 +8,7 @@
   <meta name="description" content="{{ site.description }}">
   <link rel="canonical" href="{{ site_url }}">
   <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0e1116">
+  <meta name="theme-color" content="#111316">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="uk_UA">
@@ -18,7 +19,7 @@
   <meta property="og:image" content="{{ site_url }}og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="{{ site.name }} — {{ hero.lead }}">
+  <meta property="og:image:alt" content="{{ site.name }}. {{ hero.lead }}">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -34,155 +35,165 @@
 <body>
   <a class="skip-link" href="#main">Перейти до вмісту</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
+  <header class="topbar">
+    <div class="wrap topbar-inner">
       <a class="brand" href="#top">{{ site.name }}</a>
       <nav class="nav" aria-label="Розділи сторінки">
         <a href="#projects">Проєкти</a>
         <a href="#stack">Стек</a>
+        <a href="#strengths">Сильні сторони</a>
         <a href="#about">Про мене</a>
         <a href="#contacts">Контакти</a>
       </nav>
-      <button class="theme-toggle" type="button" hidden aria-pressed="false">
-        <svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"/></svg>
-        <svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
-        <span class="visually-hidden">Світла тема</span>
+      <button class="theme-toggle" type="button" hidden>
+        Тема: <span class="theme-name">темна</span><span class="visually-hidden">. Увімкнути світлу</span>
       </button>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="container">
-        <p class="eyebrow">{{ site.role }} · {{ site.city }}</p>
-        <h1 id="hero-title">{{ site.name }}</h1>
-        <p class="hero-lead">{{ hero.lead }}</p>
-        <p class="hero-text">{{ hero.text }}</p>
-        <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/></svg>
-          Написати
-        </a>
+    <section class="record" id="top" aria-labelledby="name">
+      <div class="wrap">
+        <div class="record-head">
+          <h1 id="name">{{ site.name }}</h1>
+          <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">Написати <span aria-hidden="true">→</span><span class="visually-hidden">в Telegram</span></a>
+        </div>
+        <p class="lead">{{ hero.lead }}</p>
+        <p class="lead-text">{{ hero.text }}</p>
+        <dl class="fields fields-grid">
+          {% for f in hero.fields %}
+          <div class="field">
+            <dt>{{ f.label }}</dt>
+            <dd>{{ f.value }}</dd>
+          </div>
+          {% endfor %}
+          <div class="field">
+            <dt>Зв'язок</dt>
+            <dd><a href="{{ contacts.telegram.url }}" rel="noopener">Telegram {{ contacts.telegram.handle }}</a></dd>
+          </div>
+        </dl>
       </div>
     </section>
 
     <section class="section" id="projects" aria-labelledby="projects-title">
-      <div class="container">
-        <h2 class="section-title" id="projects-title">Проєкти</h2>
-        <div class="projects">
-          {% for p in projects %}
-          <article class="project" aria-labelledby="project-{{ loop.index }}">
-            <header class="project-head">
-              <div class="project-meta">
-                {% if p.period %}<span class="project-period">{{ p.period }}</span>{% endif %}
-                {% for b in p.badges %}<span class="badge">{{ b }}</span>{% endfor %}
-              </div>
-              <h3 class="project-title" id="project-{{ loop.index }}">{{ p.title }}</h3>
-            </header>
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="projects-title">Проєкти</h2>
+          <span class="count">{{ projects|length }} {{ plural(projects|length, "запис", "записи", "записів") }}</span>
+        </div>
 
-            <div class="project-body">
-              <div class="project-block project-task">
-                <h4>Задача</h4>
-                <p>{{ p.task }}</p>
-              </div>
-              <div class="project-block project-built">
-                <h4>Що зроблено</h4>
-                <ul class="checklist">
-                  {% for item in p.built %}
-                  <li>{{ item }}</li>
+        {% for p in projects %}
+        <article class="card" aria-labelledby="p{{ loop.index }}">
+          <header class="card-head">
+            <h3 id="p{{ loop.index }}">{{ p.title }}</h3>
+            {% if p.status %}<span class="status status-{{ p.status.kind }}">{{ p.status.label }}</span>{% endif %}
+          </header>
+          <dl class="fields card-body">
+            {% if p.period %}
+            <div class="field"><dt>Період</dt><dd class="mono">{{ p.period }}</dd></div>
+            {% endif %}
+            {% if p.purpose %}
+            <div class="field"><dt>Призначення</dt><dd>{{ p.purpose }}</dd></div>
+            {% endif %}
+            {% if p.functions %}
+            <div class="field">
+              <dt>Що зроблено</dt>
+              <dd>
+                <ul class="list">
+                  {% for f in p.functions %}
+                  <li>{{ f }}</li>
                   {% endfor %}
                 </ul>
-              </div>
-              {% if p.challenge %}
-              <div class="project-block project-challenge">
-                <h4>Що було складним</h4>
-                <p>{{ p.challenge }}</p>
-              </div>
-              {% endif %}
-              <div class="project-block project-result">
-                <h4>Результат</h4>
-                <p>{{ p.result }}</p>
-              </div>
+              </dd>
             </div>
-
-            <footer class="project-foot">
-              <ul class="tags" aria-label="Стек">
-                {% for t in p.stack %}
-                <li>{{ t }}</li>
-                {% endfor %}
-              </ul>
-              {% for l in p.links %}
-              <a class="project-link" href="{{ l.url }}" rel="noopener">{{ l.label }} <span aria-hidden="true">→</span></a>
-              {% endfor %}
-            </footer>
-          </article>
-          {% endfor %}
-        </div>
+            {% endif %}
+            {% if p.challenge %}
+            <div class="field"><dt>Що було складним</dt><dd>{{ p.challenge }}</dd></div>
+            {% endif %}
+            {% if p.result %}
+            <div class="field"><dt>Результат</dt><dd>{{ p.result }}</dd></div>
+            {% endif %}
+            {% if p.code %}
+            <div class="field">
+              <dt>Код</dt>
+              <dd>{% if p.code.url %}<a href="{{ p.code.url }}" rel="noopener">{{ p.code.text }}</a>{% else %}{{ p.code.text }}{% endif %}</dd>
+            </div>
+            {% endif %}
+            <div class="field"><dt>Стек</dt><dd class="mono">{{ items(p.stack) }}</dd></div>
+          </dl>
+        </article>
+        {% endfor %}
       </div>
     </section>
 
     <section class="section" id="stack" aria-labelledby="stack-title">
-      <div class="container">
-        <h2 class="section-title" id="stack-title">Стек</h2>
-        <div class="stack">
-          {% for level in stack %}
-          <div class="stack-level stack-level-{{ loop.index }}">
-            <h3>{{ level.level }}</h3>
-            {% if level.note %}<p class="stack-note">{{ level.note }}</p>{% endif %}
-            <ul class="tags">
-              {% for item in level["items"] %}
-              <li>{{ item }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endfor %}
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="stack-title">Стек</h2>
         </div>
+        <table class="matrix">
+          <thead>
+            <tr><th scope="col">Рівень</th><th scope="col">Технології</th></tr>
+          </thead>
+          <tbody>
+            {% for level in stack %}
+            <tr>
+              <th scope="row">
+                {{ level.level }}
+                {% if level.note %}<span class="note">{{ level.note }}</span>{% endif %}
+              </th>
+              <td class="mono">{{ items(level["items"]) }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
     </section>
 
     <section class="section" id="strengths" aria-labelledby="strengths-title">
-      <div class="container">
-        <h2 class="section-title" id="strengths-title">Сильні сторони</h2>
-        <ul class="strengths">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="strengths-title">Сильні сторони</h2>
+        </div>
+        <ol class="numbered">
           {% for s in strengths %}
-          <li>
-            <h3>{{ s.title }}</h3>
-            <p>{{ s.text }}</p>
-          </li>
+          <li>{{ s }}</li>
           {% endfor %}
-        </ul>
+        </ol>
       </div>
     </section>
 
     <section class="section" id="about" aria-labelledby="about-title">
-      <div class="container about">
-        <div>
-          <h2 class="section-title" id="about-title">Коротко про мене</h2>
-          {% for para in about.paragraphs %}
-          <p>{{ para }}</p>
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="about-title">Про мене</h2>
+        </div>
+        <p class="about-text">{{ about.text }}</p>
+        <dl class="fields">
+          {% for f in about.fields %}
+          <div class="field"><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
           {% endfor %}
-        </div>
-        <div>
-          <h3 class="subhead">Освіта та мова</h3>
-          <dl class="education">
-            {% for e in about.education %}
-            <div>
-              <dt>{{ e.title }}</dt>
-              <dd>{{ e.text }}</dd>
-            </div>
-            {% endfor %}
-          </dl>
-        </div>
+        </dl>
+        <h3 class="subhead">Журнал</h3>
+        <ol class="log">
+          {% for e in about.log %}
+          <li><span class="log-date">{{ e.date }}</span> <span class="log-event">{{ e.event }}</span></li>
+          {% endfor %}
+        </ol>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer" id="contacts">
-    <div class="container footer-inner">
-      <h2 class="footer-title">Контакти</h2>
-      <ul class="contacts">
-        <li><span class="contact-label">Telegram</span> <a href="{{ contacts.telegram.url }}" rel="noopener">{{ contacts.telegram.handle }}</a></li>
-        <li><span class="contact-label">GitHub</span> <a href="{{ contacts.github.url }}" rel="noopener">{{ contacts.github.handle }}</a></li>
-      </ul>
+  <footer class="footer" id="contacts">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Контакти</h2>
+      </div>
+      <dl class="fields">
+        {% for c in contacts.values() %}
+        <div class="field"><dt>{{ c.label }}</dt><dd><a href="{{ c.url }}" rel="noopener">{{ c.handle }}</a></dd></div>
+        {% endfor %}
+      </dl>
       <p class="copyright">© {{ year }} {{ site.name }}</p>
     </div>
   </footer>

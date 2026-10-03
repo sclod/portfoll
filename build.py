@@ -29,10 +29,26 @@ def file_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:10]
 
 
+def plural(n: int, one: str, few: str, many: str) -> str:
+    """Українська множина: 1 запис, 3 записи, 5 записів."""
+    if n % 10 == 1 and n % 100 != 11:
+        return one
+    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
+        return few
+    return many
+
+
 def build() -> None:
-    if OUT.exists():
-        shutil.rmtree(OUT)
-    shutil.copytree(STATIC, OUT)
+    # docs/*.md (дослідження, концепції) пишуться вручну — їх не чіпаємо.
+    OUT.mkdir(exist_ok=True)
+    for item in OUT.iterdir():
+        if item.suffix == ".md":
+            continue
+        if item.is_dir():
+            shutil.rmtree(item)
+        else:
+            item.unlink()
+    shutil.copytree(STATIC, OUT, dirs_exist_ok=True)
     # Вимикає обробку Jekyll на GitHub Pages — файли віддаються як є.
     (OUT / ".nojekyll").touch()
 
@@ -43,6 +59,7 @@ def build() -> None:
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    env.globals["plural"] = plural
     html = env.get_template("index.html").render(
         site=content.SITE,
         contacts=content.CONTACTS,
