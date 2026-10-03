@@ -34,7 +34,7 @@ UK = {
     "site": {
         "title": "Внутрішні системи для бізнесу — CRM, телеграм-боти, інтеграції",
         "description": (
-            "Розробник з Києва. Роблю внутрішні системи для бізнесу — CRM, "
+            "Роблю внутрішні системи для бізнесу — CRM, "
             "телеграм-боти, інтеграції, автоматизацію рутини. База — Python і SQL."
         ),
         "og_alt": "Внутрішні системи для бізнесу: CRM, телеграм-боти, інтеграції.",
@@ -75,7 +75,6 @@ UK = {
         # Картка «about.py» у першому екрані: ключ → рядок або список рядків.
         "code": [
             ("рівень", "Strong Junior"),
-            ("місто", "Київ"),
             ("база", ["Python", "SQL"]),
             ("робить", ["CRM", "телеграм-боти", "інтеграції", "автоматизація рутини"]),
             ("зв'язок", "@D0SIDE0"),
@@ -233,7 +232,7 @@ EN = {
     "site": {
         "title": "Internal systems for business — CRM, Telegram bots, integrations",
         "description": (
-            "Developer based in Kyiv. I build internal systems for business — CRM, "
+            "I build internal systems for business — CRM, "
             "Telegram bots, integrations, routine automation. Core: Python and SQL."
         ),
         "og_alt": "Internal systems for business: CRM, Telegram bots, integrations.",
@@ -273,7 +272,6 @@ EN = {
         ),
         "code": [
             ("level", "Strong Junior"),
-            ("city", "Kyiv"),
             ("core", ["Python", "SQL"]),
             ("builds", ["CRM", "Telegram bots", "integrations", "routine automation"]),
             ("contact", "@D0SIDE0"),
