@@ -70,3 +70,53 @@
 4. Форма сайта берётся из того, что человек реально строит: записи, поля, статусы, журналы. Но без фейковых
    метрик и графиков: цифр в брифе нет, значит и на странице их не будет.
 5. Сдержанность: один акцент, а цвет только там, где он что-то значит (статус).
+
+---
+
+# Раунд 2: как люди делают портфолио на самом деле
+
+Запрос: сайт для Strong Junior получился слишком «мощным». Нужно посмотреть ~15 реальных сайтов
+и сделать проще, компактнее, с капелькой космоса.
+
+**Метод.** Сайты-галереи (awwwards, onepagelove, siteinspire) и сами портфолио сетевая политика
+сессии не пускает. Зато доступен GitHub. Взял известный список
+[emmabostian/developer-portfolios](https://github.com/emmabostian/developer-portfolios) (267 сайтов на github.io),
+склонировал 24 случайных репозитория `user.github.io` со статическим HTML и открыл их локально в Chromium.
+Нормально отрисовались 21; три пустые или без стилей
+([aditya113141](https://aditya113141.github.io), [akashblsbrmnm](https://akashblsbrmnm.github.io), [narender24681](https://narender24681.github.io)).
+
+## Что повторяется почти у всех
+
+- **Большой первый экран с фото и «Hi, I'm …».** [lionelsamrat10](https://lionelsamrat10.github.io),
+  [omchaudhari1107](https://omchaudhari1107.github.io), [lakshanrukantha](https://lakshanrukantha.github.io),
+  [krash-cod3](https://krash-cod3.github.io), [pankaj-kumar-techie](https://pankaj-kumar-techie.github.io),
+  [sreegodavarthi](https://sreegodavarthi.github.io), [oussamabouchikhi](https://oussamabouchikhi.github.io).
+  Первый экран целиком уходит на имя и фото, информации ноль.
+- **Печатающийся текст с курсором.** krash-cod3, lakshanrukantha, omchaudhari1107.
+- **Неон, свечения, тяжёлые фоны.** pankaj-kumar-techie, [neelanjan-chakraborty](https://neelanjan-chakraborty.github.io),
+  [cuierd](https://cuierd.github.io) (сеть из линий), [iglesiaskevinralphbusiness](https://iglesiaskevinralphbusiness.github.io).
+- **Кнопки «Hire me» / «Download CV»** и полоски навыков в процентах ([andredfaria](https://andredfaria.github.io)).
+
+## Что читается быстрее всего
+
+- **Формат резюме: даты слева, суть справа.** [andredfaria](https://andredfaria.github.io) — плотно,
+  без лишнего, всё видно за минуту прокрутки.
+- **Минимум оформления.** [mouadziani](https://mouadziani.github.io) — моноширинный шрифт, короткие секции,
+  никаких эффектов; [machado001](https://machado001.github.io) — одна фраза и кнопка.
+- **Бэкенд-разработчик о себе одной фразой.** [devravik](https://devravik.github.io): «большую часть времени
+  делаю multi-tenant SaaS и внутренние инструменты» + список «чем занимаюсь». Ближе всего к нашему случаю.
+- **Чистая светлая подача с одной сильной фразой.** [aniketksh](https://aniketksh.github.io).
+
+## Космос, который работает
+
+- [eckeecke](https://eckeecke.github.io) и [crackedontiti](https://crackedontiti.github.io): тёмный фон
+  с редкими звёздами, контент спокойно поверх. Космос — фон и настроение, а не главный объект.
+  Это и есть «совсем немного космоса».
+
+## Решения
+
+1. Одна колонка ~780px. Записи как в резюме: период и статус слева, проект справа.
+2. Никакого фото, печатающегося текста, 3D и огромных заголовков. Первый экран: одна фраза, две строки о себе, кнопка.
+3. Космос: звёздное небо на фоне (три слоя, медленное мерцание), одна небольшая планета у заголовка,
+   комета раз в ~16 секунд. Всё на CSS, `prefers-reduced-motion` выключает движение.
+4. Шрифты: Manrope + JetBrains Mono. Декоративный Unbounded убран (минус ~80 КБ).

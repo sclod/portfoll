@@ -75,39 +75,6 @@ def highlight(text: str) -> Markup:
     return Markup(HL_RE.sub(wrap, str(escape(text))))
 
 
-def code_lines(pairs) -> list[Markup]:
-    """Словник Python для картки about.py: довгі списки — по два елементи на рядок."""
-
-    def s(v: str) -> str:
-        return f'<span class="t-str">"{escape(v)}"</span>'
-
-    lines = ['<span class="t-var">developer</span> = {']
-    for key, value in pairs:
-        k = f'    <span class="t-key">"{escape(key)}"</span>: '
-        if isinstance(value, str):
-            lines.append(f"{k}{s(value)},")
-        elif len(value) <= 2:
-            lines.append(k + "[" + ", ".join(s(v) for v in value) + "],")
-        else:
-            lines.append(k + "[")
-            for i in range(0, len(value), 2):
-                lines.append("        " + ", ".join(s(v) for v in value[i : i + 2]) + ",")
-            lines.append("    ],")
-    lines.append("}")
-    return [Markup(line) for line in lines]
-
-
-def plural(n: int, forms: tuple[str, str, str]) -> str:
-    """Множина за українськими правилами: 1 запис, 3 записи, 5 записів.
-    Для англійської форми «few» і «many» однакові, тож правило підходить і їй."""
-    one, few, many = forms
-    if n % 10 == 1 and n % 100 != 11:
-        return one
-    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
-        return few
-    return many
-
-
 def build() -> None:
     # docs/*.md (дослідження, концепції) пишуться вручну — їх не чіпаємо.
     OUT.mkdir(exist_ok=True)
@@ -129,9 +96,7 @@ def build() -> None:
         trim_blocks=True,
         lstrip_blocks=True,
     )
-    env.globals["plural"] = plural
     env.filters["hl"] = highlight
-    env.filters["code_lines"] = code_lines
     site_url = SITE_URL.rstrip("/") + "/"
     pages = {"uk": OUT / "index.html", "en": OUT / "en" / "index.html"}
     for lang in content.LANGS:

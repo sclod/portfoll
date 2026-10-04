@@ -1,5 +1,12 @@
-{% macro chips(list) %}<ul class="chips">{% for t in list %}<li>{{ t }}</li>{% endfor %}</ul>{% endmacro %}
-{% macro cube_icon(size) %}<svg viewBox="0 0 64 64" width="{{ size }}" height="{{ size }}" aria-hidden="true"><path d="M32 9 52 20.5 32 32 12 20.5z" fill="#4fe0f0"/><path d="M12 20.5 32 32v23L12 43.5z" fill="#7aa7ff"/><path d="M52 20.5 32 32v23l20-11.5z" fill="#b98cff"/></svg>{% endmacro %}
+{% macro tags(list) %}<ul class="tags">{% for t in list %}<li>{{ t }}</li>{% endfor %}</ul>{% endmacro %}
+{# Планета з кільцем. id — щоб градієнти двох планет на сторінці не конфліктували. #}
+{% macro planet(size, id) %}<svg class="planet" viewBox="0 0 120 120" width="{{ size }}" height="{{ size }}" aria-hidden="true"><defs><linearGradient id="{{ id }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#{{ id }})"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg>{% endmacro %}
+{% macro entry_side(period, status) %}
+            <div class="entry-side">
+              {% if period %}<p class="entry-date">{{ period }}</p>{% endif %}
+              {% if status %}<p class="status status-{{ status.kind }}">{{ status.label }}</p>{% endif %}
+            </div>
+{% endmacro %}
 <!doctype html>
 <html lang="{{ lang }}">
 <head>
@@ -13,7 +20,7 @@
   {% endfor %}
   <link rel="alternate" hreflang="x-default" href="{{ alternates.uk }}">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#07090d">
+  <meta name="theme-color" content="#07080f">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="{{ locale }}">
@@ -30,23 +37,22 @@
   <link rel="icon" href="{{ root }}favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="{{ root }}apple-touch-icon.png">
 
-  <link rel="preload" href="{{ root }}fonts/unbounded-{{ 'cyrillic' if lang == 'uk' else 'latin' }}.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ root }}fonts/manrope-{{ 'cyrillic' if lang == 'uk' else 'latin' }}.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ root }}style.css?v={{ css_v }}">
 </head>
 <body>
-  <div class="backdrop" aria-hidden="true">
-    <div class="glow glow-a"></div>
-    <div class="glow glow-b"></div>
-    <div class="dots"></div>
-    <div class="noise"></div>
+  <div class="sky" aria-hidden="true">
+    <span class="stars stars-1"></span>
+    <span class="stars stars-2"></span>
+    <span class="stars stars-3"></span>
+    <span class="comet"></span>
   </div>
 
   <a class="skip-link" href="#main">{{ ui.skip }}</a>
 
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <a class="brand" href="#top" aria-label="{{ ui.home }}">{{ cube_icon(28) }}<span class="brand-text">{{ ui.brand }}</span></a>
+      <a class="brand" href="#top" aria-label="{{ ui.home }}">{{ planet(24, "planet-brand") }}<span>{{ ui.brand }}</span></a>
       <nav class="nav" aria-label="{{ ui.nav_label }}">
         {% for id, label in ui.nav.items() %}
         <a href="#{{ id }}">{{ label }}</a>
@@ -58,230 +64,109 @@
     </div>
   </header>
 
-  <main id="main">
-    <section class="hero" id="top" aria-labelledby="hero-title">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <h1 id="hero-title"><span class="h1-a">{{ ui.h1[0] }}</span> <span class="h1-b">{{ ui.h1[1] }}</span></h1>
-          <p class="lead">{{ hero.lead|hl }}</p>
-          <p class="lead-text">{{ hero.text|hl }}</p>
-          <div class="hero-actions">
-            <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">
-              {{ ui.cta }}
-              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              <span class="visually-hidden">{{ ui.cta_sr }}</span>
-            </a>
-            <span class="handle">Telegram {{ contacts.telegram.handle }}</span>
-          </div>
-        </div>
-
-        <div class="hero-visual" aria-hidden="true">
-          <div class="floor"></div>
-          <div class="scene">
-            <div class="orbit orbit-a"><span class="sat"></span></div>
-            <div class="orbit orbit-b"><span class="sat"></span></div>
-            <div class="spinner">
-              <div class="cube">
-                <div class="face face-front"><b>CRM</b><i>PostgreSQL</i></div>
-                <div class="face face-back"><b>LOGS</b><i>troubleshooting</i></div>
-                <div class="face face-right"><b>BOT</b><i>aiogram</i></div>
-                <div class="face face-left"><b>API</b><i>REST</i></div>
-                <div class="face face-top"><b>SQL</b><i>schema</i></div>
-                <div class="face face-bottom"><b>LINUX</b><i>Nginx · PM2</i></div>
-              </div>
-            </div>
-            <div class="wire">
-              <span></span><span></span><span></span><span></span><span></span><span></span>
-            </div>
-            <span class="bit bit-1"></span>
-            <span class="bit bit-2"></span>
-            <span class="bit bit-3"></span>
-          </div>
-        </div>
-
-        <figure class="code-card">
-          <figcaption class="code-tab"><span class="code-file">about.py</span><span class="code-lang">python</span></figcaption>
-          <pre class="code"><code>{% for line in hero.code|code_lines %}<span class="line"><span class="ln" aria-hidden="true">{{ loop.index }}</span>{{ line }}{% if loop.last %}<span class="caret" aria-hidden="true"></span>{% endif %}</span>{% endfor %}</code></pre>
-        </figure>
+  <main id="main" class="wrap">
+    <section class="intro" id="top" aria-labelledby="intro-title">
+      <div class="intro-planet">{{ planet(132, "planet-hero") }}</div>
+      <h1 id="intro-title">{{ ui.h1[0] }} <span class="accent">{{ ui.h1[1] }}</span></h1>
+      <p class="lead">{{ hero.lead|hl }}</p>
+      <p class="intro-text">{{ hero.text|hl }}</p>
+      <div class="actions">
+        <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">{{ ui.cta }} <span aria-hidden="true">→</span><span class="visually-hidden"> {{ ui.cta_sr }}</span></a>
+        <span class="handle">Telegram {{ contacts.telegram.handle }}</span>
       </div>
     </section>
 
     <section class="section" id="projects" aria-labelledby="projects-title">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="section-label"><span class="t-comment">// {{ projects|length }} {{ plural(projects|length, ui.records) }}</span></p>
-          <h2 id="projects-title">{{ ui.nav.projects }}</h2>
-        </header>
-
-        <div class="projects">
-          {% for p in projects %}
-          {# Перша картка на всю ширину; остання теж, якщо інакше лишилася б сама в рядку #}
-          <article class="card{% if loop.first or (loop.last and projects|length is even) %} card-featured{% endif %} reveal" aria-labelledby="p{{ loop.index }}">
-            <span class="card-glyph" aria-hidden="true">{{ p.glyph }}</span>
-            <header class="card-head">
-              <div class="card-meta">
-                <span class="card-index">{{ "%02d"|format(loop.index) }}<span class="t-comment">/{{ "%02d"|format(projects|length) }}</span></span>
-                {% if p.status %}<span class="status status-{{ p.status.kind }}"><span class="pulse"></span>{{ p.status.label }}</span>{% endif %}
-                {% if p.period %}<span class="period t-num">{{ p.period }}</span>{% endif %}
-              </div>
-              <h3 id="p{{ loop.index }}">{{ p.title }}</h3>
-            </header>
-
-            <div class="card-body">
-              {% if p.purpose or p.challenge or p.result or (p.code and not p.code.url) %}
-              <div class="card-main">
-                {% if p.purpose %}<p class="purpose">{{ p.purpose|hl }}</p>{% endif %}
-                {% if p.challenge %}
-                <h4 class="mini">{{ ui.challenge }}</h4>
-                <p>{{ p.challenge|hl }}</p>
-                {% endif %}
-                {% if p.result %}
-                <h4 class="mini">{{ ui.result }}</h4>
-                <p>{{ p.result|hl }}</p>
-                {% endif %}
-                {% if p.code and not p.code.url %}
-                <p class="closed"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>{{ ui.code }}: {{ p.code.text }}</p>
-                {% endif %}
-              </div>
-              {% endif %}
-              <div class="card-list">
-                <h4 class="mini">{{ ui.built }}</h4>
-                <ul class="arrows">
-                  {% for f in p.functions %}
-                  <li>{{ f|hl }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
-            </div>
-
-            <footer class="card-foot">
-              {{ chips(p.stack) }}
+      <h2 id="projects-title">{{ ui.nav.projects }}</h2>
+      <ol class="entries">
+        {% for p in projects %}
+        <li class="entry">
+          {{ entry_side(p.period, p.status) }}
+          <div class="entry-body">
+            <h3>{{ p.title }}</h3>
+            {% if p.purpose %}<p class="entry-sub">{{ p.purpose|hl }}</p>{% endif %}
+            <ul class="bullets" aria-label="{{ ui.built }}">
+              {% for f in p.functions %}
+              <li>{{ f|hl }}</li>
+              {% endfor %}
+            </ul>
+            {% if p.challenge %}<p class="entry-note"><span class="note-label">{{ ui.challenge }}:</span> {{ p.challenge|hl }}</p>{% endif %}
+            {% if p.result %}<p class="entry-note"><span class="note-label">{{ ui.result }}:</span> {{ p.result|hl }}</p>{% endif %}
+            <div class="entry-foot">
+              {{ tags(p.stack) }}
               {% if p.code and p.code.url %}
-              <a class="card-link" href="{{ p.code.url }}" rel="noopener">{{ ui.code_link }} <span aria-hidden="true">↗</span></a>
+              <a class="code-link" href="{{ p.code.url }}" rel="noopener">{{ ui.code_link }} <span aria-hidden="true">↗</span></a>
+              {% elif p.code %}
+              <span class="code-closed">{{ ui.code }}: {{ p.code.text|lower }}</span>
               {% endif %}
-            </footer>
-          </article>
-          {% endfor %}
-        </div>
-      </div>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
     </section>
 
     <section class="section" id="experience" aria-labelledby="experience-title">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="section-label"><span class="t-comment">{{ ui.experience_label }}</span></p>
-          <h2 id="experience-title">{{ ui.nav.experience }}</h2>
-        </header>
-
+      <h2 id="experience-title">{{ ui.nav.experience }}</h2>
+      <ol class="entries">
         {% for x in experience %}
-        <article class="card card-featured reveal" aria-labelledby="x{{ loop.index }}">
-          <span class="card-glyph" aria-hidden="true">{{ x.glyph }}</span>
-          <header class="card-head">
-            <div class="card-meta">
-              <span class="status status-{{ x.status.kind }}"><span class="pulse"></span>{{ x.status.label }}</span>
-              <span class="period t-num">{{ x.period }}</span>
-            </div>
-            <h3 id="x{{ loop.index }}">{{ x.role[0] }} <span class="role-arrow">→</span> {{ x.role[1] }}</h3>
-          </header>
-
-          <div class="card-body">
-            <div class="card-main">
-              <p class="purpose">{{ x.subtitle }}</p>
-            </div>
-            <div class="card-list">
-              <h4 class="mini">{{ ui.did }}</h4>
-              <ul class="arrows">
-                {% for f in x.functions %}
-                <li>{{ f|hl }}</li>
-                {% endfor %}
-              </ul>
-            </div>
+        <li class="entry">
+          {{ entry_side(x.period, x.status) }}
+          <div class="entry-body">
+            <h3>{{ x.role[0] }} <span class="arrow">→</span> {{ x.role[1] }}</h3>
+            <p class="entry-sub">{{ x.subtitle }}</p>
+            <ul class="bullets" aria-label="{{ ui.did }}">
+              {% for f in x.functions %}
+              <li>{{ f|hl }}</li>
+              {% endfor %}
+            </ul>
+            <div class="entry-foot">{{ tags(x.tags) }}</div>
           </div>
-
-          <footer class="card-foot">
-            {{ chips(x.tags) }}
-          </footer>
-        </article>
+        </li>
         {% endfor %}
-      </div>
+      </ol>
     </section>
 
     <section class="section" id="stack" aria-labelledby="stack-title">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="section-label"><span class="t-comment">{{ ui.stack_label }}</span></p>
-          <h2 id="stack-title">{{ ui.nav.stack }}</h2>
-        </header>
-
-        <div class="stack">
-          <div class="stack-visual" aria-hidden="true">
-            <div class="iso">
-              {% for level in stack %}
-              <div class="slab slab-{{ loop.index }}"><span>{{ level.level }}</span></div>
-              {% endfor %}
-            </div>
-          </div>
-          <div class="stack-rows">
-            {% for level in stack %}
-            <div class="stack-row row-{{ loop.index }} reveal">
-              <div class="row-head">
-                <h3><span class="row-dot"></span>{{ level.level }}</h3>
-                {% if level.note %}<p class="note">{{ level.note|hl }}</p>{% endif %}
-              </div>
-              {{ chips(level["items"]) }}
-            </div>
-            {% endfor %}
-          </div>
+      <h2 id="stack-title">{{ ui.nav.stack }}</h2>
+      <dl class="rows">
+        {% for level in stack %}
+        <div class="row">
+          <dt>{{ level.level }}{% if level.note %}<span class="row-note">{{ level.note|hl }}</span>{% endif %}</dt>
+          <dd>{{ tags(level["items"]) }}</dd>
         </div>
-      </div>
+        {% endfor %}
+      </dl>
     </section>
 
     <section class="section" id="strengths" aria-labelledby="strengths-title">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="section-label"><span class="t-comment">{{ ui.strengths_label }}</span></p>
-          <h2 id="strengths-title">{{ ui.nav.strengths }}</h2>
-        </header>
-        <ol class="strengths">
-          {% for s in strengths %}
-          <li class="reveal"><span class="strength-n" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span><p>{{ s|hl }}</p></li>
-          {% endfor %}
-        </ol>
-      </div>
+      <h2 id="strengths-title">{{ ui.nav.strengths }}</h2>
+      <ul class="bullets bullets-wide">
+        {% for s in strengths %}
+        <li>{{ s|hl }}</li>
+        {% endfor %}
+      </ul>
     </section>
 
     <section class="section" id="about" aria-labelledby="about-title">
-      <div class="wrap">
-        <header class="section-head">
-          <p class="section-label"><span class="t-comment">{{ ui.about_label }}</span></p>
-          <h2 id="about-title">{{ ui.nav.about }}</h2>
-        </header>
-        <div class="about">
-          <div class="about-main reveal">
-            <blockquote class="quote"><p>{{ about.text|hl }}</p></blockquote>
-            <dl class="facts">
-              {% for f in about.fields %}
-              <div><dt>{{ f.label }}</dt><dd>{{ f.value|hl }}</dd></div>
-              {% endfor %}
-            </dl>
-          </div>
-          <div class="about-log reveal">
-            <h3 class="mini">{{ ui.log }}</h3>
-            <ol class="log">
-              {% for e in about.log %}
-              <li><span class="log-date">{{ e.date|hl }}</span><span class="log-event">{{ e.event|hl }}</span></li>
-              {% endfor %}
-            </ol>
-          </div>
-        </div>
-      </div>
+      <h2 id="about-title">{{ ui.nav.about }}</h2>
+      <p class="about-text">{{ about.text|hl }}</p>
+      <dl class="rows">
+        {% for f in about.fields %}
+        <div class="row"><dt>{{ f.label }}</dt><dd>{{ f.value|hl }}</dd></div>
+        {% endfor %}
+      </dl>
+      <h3 class="subhead">{{ ui.log }}</h3>
+      <ol class="rows log">
+        {% for e in about.log %}
+        <li class="row"><span class="row-date">{{ e.date }}</span><span>{{ e.event|hl }}</span></li>
+        {% endfor %}
+      </ol>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="wrap">
-      <p class="copyright"><span class="t-comment">©</span> {{ year }}</p>
-    </div>
+    <div class="wrap">© {{ year }}</div>
   </footer>
 </body>
 </html>

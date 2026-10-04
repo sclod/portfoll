@@ -17,8 +17,7 @@ VF_CODE_URL = "https://github.com/sclod/vehicleflow-demo"
 SWAP_STACK = ["Next.js", "TypeScript", "Prisma", "SQLite", "Socket.IO", "Zod", "Tailwind CSS"]
 SWAP_CODE_URL = "https://github.com/sclod/swapdesk"
 
-# Поля проєкту (усі, крім title і glyph, необов'язкові):
-#   glyph     — коротка декоративна позначка на фоні картки
+# Поля проєкту (усі, крім title, необов'язкові):
 #   period    — період
 #   status    — {"label": ..., "kind": "prod" | "demo"}
 #   purpose   — призначення / у чому задача
@@ -55,11 +54,6 @@ UK = {
         "h1": ["Внутрішні системи", "для бізнесу"],
         "cta": "Написати",
         "cta_sr": "в Telegram",
-        "records": ("запис", "записи", "записів"),
-        "experience_label": "// до розробки",
-        "stack_label": "// від фундаменту до надбудови",
-        "strengths_label": "// як я працюю",
-        "about_label": "// коротко",
         "built": "Що зроблено",
         "did": "Що зроблено",
         "challenge": "Що було складним",
@@ -75,18 +69,10 @@ UK = {
             "AI-інструментів: ставлю задачу, перевіряю результат, дебажу, відповідаю "
             "за те, як воно працює в проді."
         ),
-        # Картка «about.py» у першому екрані: ключ → рядок або список рядків.
-        "code": [
-            ("рівень", "Strong Junior"),
-            ("база", ["Python", "SQL"]),
-            ("робить", ["CRM", "телеграм-боти", "інтеграції", "автоматизація рутини"]),
-            ("зв'язок", "@D0SIDE0"),
-        ],
     },
     "projects": [
         {
             "title": "CRM для юридичної практики",
-            "glyph": "CRM",
             "period": "2023 — дотепер",
             "status": {"label": "У продакшені", "kind": "prod"},
             "purpose": "Внутрішня система, зроблена з нуля, підтримується мною.",
@@ -106,7 +92,6 @@ UK = {
         },
         {
             "title": "SwapDesk",
-            "glyph": "SWAP",
             "period": "",
             "status": {"label": "Демо", "kind": "demo"},
             "purpose": (
@@ -137,7 +122,6 @@ UK = {
         },
         {
             "title": "VehicleFlow Demo",
-            "glyph": "VF",
             "period": "",
             "status": {"label": "Демо", "kind": "demo"},
             "purpose": "Трекінг замовлень авто.",
@@ -154,7 +138,6 @@ UK = {
         },
         {
             "title": "Telegram-боти для бізнесу",
-            "glyph": "BOT",
             "period": "2023 — 2024",
             "status": None,
             "purpose": "",
@@ -171,11 +154,10 @@ UK = {
             "stack": BOTS_STACK,
         },
     ],
-    # Досвід роботи. Поля — як у проєктів; назви компаній не вказуються.
+    # Досвід роботи. Назви компаній не вказуються.
     "experience": [
         {
             "role": ["IT-спеціаліст", "керівник IT-групи"],
-            "glyph": "IT",
             "period": "2022 — 2025",
             "status": {"label": "Завершено", "kind": "done"},
             "subtitle": "Приватні компанії, Київ · назви не розголошуються",
@@ -247,6 +229,7 @@ UK = {
             "довести до робочого стану."
         ),
         "fields": [
+            {"label": "Рівень", "value": "Strong Junior"},
             {"label": "Освіта", "value": "Комп'ютерна академія ШАГ, Київ — курс Python, 2021"},
             {"label": "Англійська", "value": "Elementary, читаю технічну документацію"},
         ],
@@ -287,11 +270,6 @@ EN = {
         "h1": ["Internal systems", "for business"],
         "cta": "Message me",
         "cta_sr": "on Telegram",
-        "records": ("record", "records", "records"),
-        "experience_label": "// before development",
-        "stack_label": "// from the foundation up",
-        "strengths_label": "// how I work",
-        "about_label": "// in short",
         "built": "What I built",
         "did": "What I did",
         "challenge": "What was hard",
@@ -307,17 +285,10 @@ EN = {
             "I set the task, review the result, debug, and take responsibility for "
             "how it runs in production."
         ),
-        "code": [
-            ("level", "Strong Junior"),
-            ("core", ["Python", "SQL"]),
-            ("builds", ["CRM", "Telegram bots", "integrations", "routine automation"]),
-            ("contact", "@D0SIDE0"),
-        ],
     },
     "projects": [
         {
             "title": "CRM for a law practice",
-            "glyph": "CRM",
             "period": "2023 — present",
             "status": {"label": "In production", "kind": "prod"},
             "purpose": "Internal system, built from scratch and maintained by me.",
@@ -337,7 +308,6 @@ EN = {
         },
         {
             "title": "SwapDesk",
-            "glyph": "SWAP",
             "period": "",
             "status": {"label": "Demo", "kind": "demo"},
             "purpose": (
@@ -369,7 +339,6 @@ EN = {
         },
         {
             "title": "VehicleFlow Demo",
-            "glyph": "VF",
             "period": "",
             "status": {"label": "Demo", "kind": "demo"},
             "purpose": "Car order tracking.",
@@ -386,7 +355,6 @@ EN = {
         },
         {
             "title": "Telegram bots for business",
-            "glyph": "BOT",
             "period": "2023 — 2024",
             "status": None,
             "purpose": "",
@@ -406,7 +374,6 @@ EN = {
     "experience": [
         {
             "role": ["IT specialist", "IT team lead"],
-            "glyph": "IT",
             "period": "2022 — 2025",
             "status": {"label": "Completed", "kind": "done"},
             "subtitle": "Private companies, Kyiv · names not disclosed",
@@ -478,6 +445,7 @@ EN = {
             "someone else's code, connecting several systems and getting it all working."
         ),
         "fields": [
+            {"label": "Level", "value": "Strong Junior"},
             {"label": "Education", "value": "IT STEP Computer Academy, Kyiv — Python course, 2021"},
             {"label": "English", "value": "Elementary, I read technical documentation"},
         ],
