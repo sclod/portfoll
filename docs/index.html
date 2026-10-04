@@ -28,7 +28,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="style.css?v=c47c57c2f2">
+  <link rel="stylesheet" href="style.css?v=c5a6a763f4">
 </head>
 <body>
   <div class="sky" aria-hidden="true">
@@ -40,24 +40,11 @@
 
   <a class="skip-link" href="#main">Перейти до вмісту</a>
 
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#top" aria-label="На початок"><svg class="planet" viewBox="0 0 120 120" width="24" height="24" aria-hidden="true"><defs><linearGradient id="planet-brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#planet-brand)"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg><span>портфоліо</span></a>
-      <nav class="nav" aria-label="Розділи сторінки">
-        <a href="#projects">Проєкти</a>
-        <a href="#experience">Досвід</a>
-        <a href="#stack">Стек</a>
-        <a href="#strengths">Сильні сторони</a>
-        <a href="#about">Про мене</a>
-      </nav>
-      <a class="lang-switch" href="en/" hreflang="en" lang="en" title="English version">
-        <span class="lang-current" aria-hidden="true">UA</span><span class="lang-sep" aria-hidden="true">/</span><span class="lang-other">EN</span><span class="visually-hidden"> — English version</span>
-      </a>
-    </div>
-  </header>
-
   <main id="main" class="wrap">
     <section class="intro" id="top" aria-labelledby="intro-title">
+      <a class="lang-switch" href="en/" hreflang="en" lang="en" title="English version">
+        <span class="lang-current" aria-hidden="true">UA</span><span class="lang-sep" aria-hidden="true">·</span><span class="lang-other">EN</span><span class="visually-hidden"> — English version</span>
+      </a>
       <div class="intro-planet"><svg class="planet" viewBox="0 0 120 120" width="132" height="132" aria-hidden="true"><defs><linearGradient id="planet-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#planet-hero)"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg></div>
       <h1 id="intro-title">Внутрішні системи <span class="accent">для бізнесу</span></h1>
       <p class="lead">CRM, телеграм-боти, інтеграції, автоматизація рутини.</p>
@@ -66,6 +53,15 @@
         <a class="button" href="https://t.me/D0SIDE0" rel="noopener">Написати <span aria-hidden="true">→</span><span class="visually-hidden"> в Telegram</span></a>
         <span class="handle">Telegram @D0SIDE0</span>
       </div>
+      <nav class="constellation" aria-label="Розділи сторінки">
+        <ul>
+          <li><a href="#projects">Проєкти</a></li>
+          <li><a href="#experience">Досвід</a></li>
+          <li><a href="#stack">Стек</a></li>
+          <li><a href="#strengths">Сильні сторони</a></li>
+          <li><a href="#about">Про мене</a></li>
+        </ul>
+      </nav>
     </section>
 
     <section class="section" id="projects" aria-labelledby="projects-title">
@@ -218,7 +214,10 @@
   </main>
 
   <footer class="footer">
-    <div class="wrap">© 2026</div>
+    <div class="wrap footer-inner">
+      <span>© 2026</span>
+      <a href="#top">↑ На початок</a>
+    </div>
   </footer>
 </body>
 </html>

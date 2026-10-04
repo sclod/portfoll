@@ -41,7 +41,6 @@ UK = {
     "ui": {
         "skip": "Перейти до вмісту",
         "home": "На початок",
-        "brand": "портфоліо",
         "nav_label": "Розділи сторінки",
         "nav": {
             "projects": "Проєкти",
@@ -257,7 +256,6 @@ EN = {
     "ui": {
         "skip": "Skip to content",
         "home": "Back to top",
-        "brand": "portfolio",
         "nav_label": "Page sections",
         "nav": {
             "projects": "Projects",

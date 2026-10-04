@@ -50,22 +50,11 @@
 
   <a class="skip-link" href="#main">{{ ui.skip }}</a>
 
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#top" aria-label="{{ ui.home }}">{{ planet(24, "planet-brand") }}<span>{{ ui.brand }}</span></a>
-      <nav class="nav" aria-label="{{ ui.nav_label }}">
-        {% for id, label in ui.nav.items() %}
-        <a href="#{{ id }}">{{ label }}</a>
-        {% endfor %}
-      </nav>
-      <a class="lang-switch" href="{{ ui.lang_switch.href }}" hreflang="{{ ui.lang_switch.hreflang }}" lang="{{ ui.lang_switch.hreflang }}" title="{{ ui.lang_switch.title }}">
-        <span class="lang-current" aria-hidden="true">{{ 'UA' if lang == 'uk' else 'EN' }}</span><span class="lang-sep" aria-hidden="true">/</span><span class="lang-other">{{ ui.lang_switch.label }}</span><span class="visually-hidden"> — {{ ui.lang_switch.title }}</span>
-      </a>
-    </div>
-  </header>
-
   <main id="main" class="wrap">
     <section class="intro" id="top" aria-labelledby="intro-title">
+      <a class="lang-switch" href="{{ ui.lang_switch.href }}" hreflang="{{ ui.lang_switch.hreflang }}" lang="{{ ui.lang_switch.hreflang }}" title="{{ ui.lang_switch.title }}">
+        <span class="lang-current" aria-hidden="true">{{ 'UA' if lang == 'uk' else 'EN' }}</span><span class="lang-sep" aria-hidden="true">·</span><span class="lang-other">{{ ui.lang_switch.label }}</span><span class="visually-hidden"> — {{ ui.lang_switch.title }}</span>
+      </a>
       <div class="intro-planet">{{ planet(132, "planet-hero") }}</div>
       <h1 id="intro-title">{{ ui.h1[0] }} <span class="accent">{{ ui.h1[1] }}</span></h1>
       <p class="lead">{{ hero.lead|hl }}</p>
@@ -74,6 +63,14 @@
         <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">{{ ui.cta }} <span aria-hidden="true">→</span><span class="visually-hidden"> {{ ui.cta_sr }}</span></a>
         <span class="handle">Telegram {{ contacts.telegram.handle }}</span>
       </div>
+      {# Навігація-«сузір'я»: розділи сторінки, розділені зірочками #}
+      <nav class="constellation" aria-label="{{ ui.nav_label }}">
+        <ul>
+          {% for id, label in ui.nav.items() %}
+          <li><a href="#{{ id }}">{{ label }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
     </section>
 
     <section class="section" id="projects" aria-labelledby="projects-title">
@@ -166,7 +163,10 @@
   </main>
 
   <footer class="footer">
-    <div class="wrap">© {{ year }}</div>
+    <div class="wrap footer-inner">
+      <span>© {{ year }}</span>
+      <a href="#top">↑ {{ ui.home }}</a>
+    </div>
   </footer>
 </body>
 </html>

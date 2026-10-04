@@ -28,7 +28,7 @@
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 
   <link rel="preload" href="../fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../style.css?v=c47c57c2f2">
+  <link rel="stylesheet" href="../style.css?v=c5a6a763f4">
 </head>
 <body>
   <div class="sky" aria-hidden="true">
@@ -40,24 +40,11 @@
 
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#top" aria-label="Back to top"><svg class="planet" viewBox="0 0 120 120" width="24" height="24" aria-hidden="true"><defs><linearGradient id="planet-brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#planet-brand)"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg><span>portfolio</span></a>
-      <nav class="nav" aria-label="Page sections">
-        <a href="#projects">Projects</a>
-        <a href="#experience">Experience</a>
-        <a href="#stack">Stack</a>
-        <a href="#strengths">Strengths</a>
-        <a href="#about">About</a>
-      </nav>
-      <a class="lang-switch" href="../" hreflang="uk" lang="uk" title="Українська версія">
-        <span class="lang-current" aria-hidden="true">EN</span><span class="lang-sep" aria-hidden="true">/</span><span class="lang-other">UA</span><span class="visually-hidden"> — Українська версія</span>
-      </a>
-    </div>
-  </header>
-
   <main id="main" class="wrap">
     <section class="intro" id="top" aria-labelledby="intro-title">
+      <a class="lang-switch" href="../" hreflang="uk" lang="uk" title="Українська версія">
+        <span class="lang-current" aria-hidden="true">EN</span><span class="lang-sep" aria-hidden="true">·</span><span class="lang-other">UA</span><span class="visually-hidden"> — Українська версія</span>
+      </a>
       <div class="intro-planet"><svg class="planet" viewBox="0 0 120 120" width="132" height="132" aria-hidden="true"><defs><linearGradient id="planet-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#planet-hero)"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg></div>
       <h1 id="intro-title">Internal systems <span class="accent">for business</span></h1>
       <p class="lead">CRM, <span class="t-fn">Telegram</span> bots, integrations, routine automation.</p>
@@ -66,6 +53,15 @@
         <a class="button" href="https://t.me/D0SIDE0" rel="noopener">Message me <span aria-hidden="true">→</span><span class="visually-hidden"> on Telegram</span></a>
         <span class="handle">Telegram @D0SIDE0</span>
       </div>
+      <nav class="constellation" aria-label="Page sections">
+        <ul>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#strengths">Strengths</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </nav>
     </section>
 
     <section class="section" id="projects" aria-labelledby="projects-title">
@@ -218,7 +214,10 @@
   </main>
 
   <footer class="footer">
-    <div class="wrap">© 2026</div>
+    <div class="wrap footer-inner">
+      <span>© 2026</span>
+      <a href="#top">↑ Back to top</a>
+    </div>
   </footer>
 </body>
 </html>
