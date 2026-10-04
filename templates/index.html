@@ -55,6 +55,7 @@
       <a class="lang-switch" href="{{ ui.lang_switch.href }}" hreflang="{{ ui.lang_switch.hreflang }}" lang="{{ ui.lang_switch.hreflang }}" title="{{ ui.lang_switch.title }}">
         <span class="lang-current" aria-hidden="true">{{ 'UA' if lang == 'uk' else 'EN' }}</span><span class="lang-sep" aria-hidden="true">·</span><span class="lang-other">{{ ui.lang_switch.label }}</span><span class="visually-hidden"> — {{ ui.lang_switch.title }}</span>
       </a>
+      <span class="planet-stars" aria-hidden="true"></span>
       <div class="intro-planet">{{ planet(132, "planet-hero") }}</div>
       <h1 id="intro-title">{{ ui.h1[0] }} <span class="accent">{{ ui.h1[1] }}</span></h1>
       <p class="lead">{{ hero.lead|hl }}</p>

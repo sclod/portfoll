@@ -43,7 +43,7 @@
   --line: rgba(190, 200, 255, 0.1);
   --line-hi: rgba(190, 200, 255, 0.2);
   --text: #e8eaf2;
-  --text-2: #c3c8d6;
+  --text-2: #ccd1dd;
   --muted: #959cb0;
   --accent: #a9b6ff;
   --accent-2: #c7a8ff;
@@ -83,6 +83,7 @@ body {
   color: var(--text);
   font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   font-size: 1rem;
+  font-weight: 450;
   line-height: 1.6;
 }
 
@@ -158,11 +159,14 @@ a {
     radial-gradient(ellipse 60% 40% at 0% 0%, rgba(80, 140, 255, 0.08), transparent 70%);
 }
 
+/* Зірки ніколи не лежать під текстом: смуга колонки з текстом прозора.
+   На телефоні колонка займає весь екран, тож фонових зірок там немає —
+   лише невелике скупчення біля планети (.planet-stars). */
 .stars {
   position: absolute;
   inset: 0;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 60%, rgba(0, 0, 0, 0.3) 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0.55) 60%, rgba(0, 0, 0, 0.3) 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(50% - 480px), transparent calc(50% - 410px), transparent calc(50% + 410px), #000 calc(50% + 480px));
+  mask-image: linear-gradient(90deg, #000 calc(50% - 480px), transparent calc(50% - 410px), transparent calc(50% + 410px), #000 calc(50% + 480px));
 }
 
 .stars-1 {
@@ -286,6 +290,46 @@ a {
   opacity: 0.9;
   filter: drop-shadow(0 0 24px rgba(140, 120, 255, 0.35));
   animation: drift 9s ease-in-out infinite alternate;
+}
+
+.planet-stars {
+  position: absolute;
+  top: 14px;
+  right: 24px;
+  pointer-events: none;
+}
+
+.planet-stars::before,
+.planet-stars::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.planet-stars::before {
+  width: 1.5px;
+  height: 1.5px;
+  box-shadow:
+    -150px 24px rgba(255, 255, 255, 0.7),
+    -118px 62px rgba(255, 255, 255, 0.5),
+    -96px 8px rgba(255, 255, 255, 0.8),
+    -70px 88px rgba(255, 255, 255, 0.45),
+    -40px 30px rgba(255, 255, 255, 0.6),
+    -8px 94px rgba(255, 255, 255, 0.5),
+    14px 6px rgba(255, 255, 255, 0.7),
+    -178px 70px rgba(255, 255, 255, 0.4);
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+.planet-stars::after {
+  width: 2px;
+  height: 2px;
+  box-shadow:
+    -132px 40px rgba(225, 225, 255, 0.9),
+    -54px 58px rgba(255, 255, 255, 0.8),
+    6px 40px rgba(210, 200, 255, 0.85),
+    -196px 14px rgba(255, 255, 255, 0.7);
+  animation: twinkle 9s ease-in-out infinite alternate-reverse;
 }
 
 .intro-planet .planet {
