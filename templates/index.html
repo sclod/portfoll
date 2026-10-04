@@ -166,6 +166,46 @@
       </div>
     </section>
 
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-label"><span class="t-comment">{{ ui.experience_label }}</span></p>
+          <h2 id="experience-title">{{ ui.nav.experience }}</h2>
+        </header>
+
+        {% for x in experience %}
+        <article class="card card-featured reveal" aria-labelledby="x{{ loop.index }}">
+          <span class="card-glyph" aria-hidden="true">{{ x.glyph }}</span>
+          <header class="card-head">
+            <div class="card-meta">
+              <span class="status status-{{ x.status.kind }}"><span class="pulse"></span>{{ x.status.label }}</span>
+              <span class="period t-num">{{ x.period }}</span>
+            </div>
+            <h3 id="x{{ loop.index }}">{{ x.role[0] }} <span class="role-arrow">→</span> {{ x.role[1] }}</h3>
+          </header>
+
+          <div class="card-body">
+            <div class="card-main">
+              <p class="purpose">{{ x.subtitle }}</p>
+            </div>
+            <div class="card-list">
+              <h4 class="mini">{{ ui.did }}</h4>
+              <ul class="arrows">
+                {% for f in x.functions %}
+                <li>{{ f|hl }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+
+          <footer class="card-foot">
+            {{ chips(x.tags) }}
+          </footer>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
     <section class="section" id="stack" aria-labelledby="stack-title">
       <div class="wrap">
         <header class="section-head">

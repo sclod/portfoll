@@ -46,6 +46,7 @@ UK = {
         "nav_label": "Розділи сторінки",
         "nav": {
             "projects": "Проєкти",
+            "experience": "Досвід",
             "stack": "Стек",
             "strengths": "Сильні сторони",
             "about": "Про мене",
@@ -55,10 +56,12 @@ UK = {
         "cta": "Написати",
         "cta_sr": "в Telegram",
         "records": ("запис", "записи", "записів"),
+        "experience_label": "// до розробки",
         "stack_label": "// від фундаменту до надбудови",
         "strengths_label": "// як я працюю",
         "about_label": "// коротко",
         "built": "Що зроблено",
+        "did": "Що зроблено",
         "challenge": "Що було складним",
         "result": "Результат",
         "code": "Код",
@@ -168,6 +171,36 @@ UK = {
             "stack": BOTS_STACK,
         },
     ],
+    # Досвід роботи. Поля — як у проєктів; назви компаній не вказуються.
+    "experience": [
+        {
+            "role": ["IT-спеціаліст", "керівник IT-групи"],
+            "glyph": "IT",
+            "period": "2022 — 2025",
+            "status": {"label": "Завершено", "kind": "done"},
+            "subtitle": "Приватні компанії, Київ · назви не розголошуються",
+            "functions": [
+                "Єдиний IT-спеціаліст на компанію з 70+ користувачів. За перший тиждень "
+                "розібрався в процесах і автоматизував те, що до мене робили вручну — "
+                "вивільнило час на роботу з людьми замість рутини. Результат відзначили "
+                "підвищенням зарплати.",
+                "Очолив групу з трьох спеціалістів: онбординг, навчання, розподіл задач.",
+                "Технічна підтримка користувачів: робочі місця, діагностика та ремонт, "
+                "переустановка систем, периферія, мобільні пристрої (iOS, Android).",
+                "Підібрав і впровадив телефонію, підтримував зв'язок співробітників "
+                "на комп'ютерах і мобільних.",
+                "Перехід від підтримки до розробки: внутрішні інструменти й сайти "
+                "під задачі, для яких не було готових рішень.",
+            ],
+            "tags": [
+                "технічна підтримка",
+                "системне адміністрування",
+                "телефонія",
+                "автоматизація процесів",
+                "внутрішні інструменти",
+            ],
+        },
+    ],
     "stack": [
         {
             "level": "Впевнено",
@@ -221,6 +254,7 @@ UK = {
         "log": [
             {"date": "2023 — дотепер", "event": "CRM для юридичної практики, у продакшені"},
             {"date": "2023 — 2024", "event": "Telegram-боти для бізнесу"},
+            {"date": "2022 — 2025", "event": "IT-спеціаліст → керівник IT-групи, приватні компанії"},
             {"date": "2021", "event": "Комп'ютерна академія ШАГ, Київ — курс Python"},
         ],
     },
@@ -244,6 +278,7 @@ EN = {
         "nav_label": "Page sections",
         "nav": {
             "projects": "Projects",
+            "experience": "Experience",
             "stack": "Stack",
             "strengths": "Strengths",
             "about": "About",
@@ -253,10 +288,12 @@ EN = {
         "cta": "Message me",
         "cta_sr": "on Telegram",
         "records": ("record", "records", "records"),
+        "experience_label": "// before development",
         "stack_label": "// from the foundation up",
         "strengths_label": "// how I work",
         "about_label": "// in short",
         "built": "What I built",
+        "did": "What I did",
         "challenge": "What was hard",
         "result": "Result",
         "code": "Code",
@@ -366,6 +403,35 @@ EN = {
             "stack": BOTS_STACK,
         },
     ],
+    "experience": [
+        {
+            "role": ["IT specialist", "IT team lead"],
+            "glyph": "IT",
+            "period": "2022 — 2025",
+            "status": {"label": "Completed", "kind": "done"},
+            "subtitle": "Private companies, Kyiv · names not disclosed",
+            "functions": [
+                "The only IT specialist in a company of 70+ users. Within the first week "
+                "I figured out the processes and automated what had been done manually "
+                "before me — freeing up time for working with people instead of routine. "
+                "The result was recognized with a pay raise.",
+                "Led a team of three specialists: onboarding, training, task assignment.",
+                "User technical support: workstations, diagnostics and repair, OS "
+                "reinstalls, peripherals, mobile devices (iOS, Android).",
+                "Selected and rolled out telephony; kept employees connected on "
+                "computers and mobile devices.",
+                "Moving from support to development: internal tools and websites for "
+                "tasks that had no off-the-shelf solution.",
+            ],
+            "tags": [
+                "technical support",
+                "system administration",
+                "telephony",
+                "process automation",
+                "internal tools",
+            ],
+        },
+    ],
     "stack": [
         {
             "level": "Confident",
@@ -418,6 +484,7 @@ EN = {
         "log": [
             {"date": "2023 — present", "event": "CRM for a law practice, in production"},
             {"date": "2023 — 2024", "event": "Telegram bots for business"},
+            {"date": "2022 — 2025", "event": "IT specialist → IT team lead, private companies"},
             {"date": "2021", "event": "IT STEP Computer Academy, Kyiv — Python course"},
         ],
     },

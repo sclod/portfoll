@@ -37,7 +37,7 @@ def tech_terms() -> list[str]:
     for lang in content.LANGS:
         raw += [t for level in lang["stack"] for t in level["items"]]
         raw += [t for p in lang["projects"] for t in p["stack"]]
-    terms = {"Telegram", "Claude"}
+    terms = {"Telegram", "Claude", "iOS", "Android"}
     for item in raw:
         for part in re.split(r"[,/]", re.sub(r"\(.*?\)", "", item)):
             part = part.strip()
@@ -60,7 +60,7 @@ for cls, words in HIGHLIGHT_RULES:
     for w in words:
         _HL_CLASS[w] = cls
         _parts.append(re.escape(str(escape(w))))
-_parts.append(r"20\d\d")
+_parts.append(r"20\d\d|\d+\+")  # роки й «70+» — як числа
 HL_RE = re.compile(r"(?<![\w-])(" + "|".join(_parts) + r")(?!\w)")
 
 

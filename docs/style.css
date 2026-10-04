@@ -1004,6 +1004,7 @@ a {
 
 .status-prod { color: var(--t-str); }
 .status-demo { color: var(--t-num); }
+.status-done { color: var(--muted); }
 
 .pulse {
   position: relative;
@@ -1033,6 +1034,13 @@ a {
   letter-spacing: -0.015em;
 }
 
+.role-arrow {
+  margin: 0 0.12em;
+  color: var(--cyan);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-weight: 500;
+}
+
 .card-featured h3 {
   font-size: clamp(1.5rem, 3.8vw, 2.5rem);
 }
@@ -1048,6 +1056,16 @@ a {
   .card-featured .card-body {
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     gap: 48px;
+  }
+
+  /* Якщо в широкій картці лише список — він займає всю ширину у дві колонки */
+  .card-featured .card-list:only-child {
+    grid-column: 1 / -1;
+  }
+
+  .card-featured .card-list:only-child .arrows {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 48px;
   }
 }
 
