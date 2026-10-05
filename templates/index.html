@@ -1,0 +1,171 @@
+{% macro tags(list) %}<ul class="tags">{% for t in list %}<li>{{ t }}</li>{% endfor %}</ul>{% endmacro %}
+{# Планета з кільцем. id — щоб градієнти двох планет на сторінці не конфліктували. #}
+{% macro planet(size, id) %}<svg class="planet" viewBox="0 0 120 120" width="{{ size }}" height="{{ size }}" aria-hidden="true"><defs><linearGradient id="{{ id }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#{{ id }})"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg>{% endmacro %}
+{% macro entry_side(period, status) %}
+            <div class="entry-side">
+              {% if period %}<p class="entry-date">{{ period }}</p>{% endif %}
+              {% if status %}<p class="status status-{{ status.kind }}">{{ status.label }}</p>{% endif %}
+            </div>
+{% endmacro %}
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  <link rel="canonical" href="{{ page_url }}">
+  {% for code, url in alternates.items() %}
+  <link rel="alternate" hreflang="{{ code }}" href="{{ url }}">
+  {% endfor %}
+  <link rel="alternate" hreflang="x-default" href="{{ alternates.uk }}">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#07080f">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="{{ locale }}">
+  <meta property="og:title" content="{{ site.title }}">
+  <meta property="og:description" content="{{ site.description }}">
+  <meta property="og:url" content="{{ page_url }}">
+  <meta property="og:image" content="{{ site_url }}og{% if lang != 'uk' %}-{{ lang }}{% endif %}.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ site.og_alt }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="{{ root }}favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="{{ root }}favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="{{ root }}apple-touch-icon.png">
+
+  <link rel="preload" href="{{ root }}fonts/manrope-{{ 'cyrillic' if lang == 'uk' else 'latin' }}.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ root }}style.css?v={{ css_v }}">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+  <a class="skip-link" href="#main">{{ ui.skip }}</a>
+
+  <main id="main" class="wrap">
+    <section class="intro" id="top" aria-labelledby="intro-title">
+      <a class="lang-switch" href="{{ ui.lang_switch.href }}" hreflang="{{ ui.lang_switch.hreflang }}" lang="{{ ui.lang_switch.hreflang }}" title="{{ ui.lang_switch.title }}">
+        <span class="lang-current" aria-hidden="true">{{ 'UA' if lang == 'uk' else 'EN' }}</span><span class="lang-sep" aria-hidden="true">·</span><span class="lang-other">{{ ui.lang_switch.label }}</span><span class="visually-hidden"> — {{ ui.lang_switch.title }}</span>
+      </a>
+      <div class="intro-planet" aria-hidden="true">
+        <span class="orbit"></span>
+        {{ planet(132, "planet-hero") }}
+        <span class="moon"></span>
+      </div>
+      <h1 id="intro-title">{{ ui.h1[0] }} <span class="accent">{{ ui.h1[1] }}</span></h1>
+      <p class="lead">{{ hero.lead|hl }}</p>
+      <p class="intro-text">{{ hero.text|hl }}</p>
+      {# Навігація-«сузір'я»: розділи сторінки, розділені зірочками #}
+      <nav class="constellation" aria-label="{{ ui.nav_label }}">
+        <ul>
+          {% for id, label in ui.nav.items() %}
+          <li><a href="#{{ id }}">{{ label }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </section>
+
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title">{{ ui.nav.projects }}</h2>
+      <ol class="entries">
+        {% for p in projects %}
+        <li class="entry">
+          {{ entry_side(p.period, p.status) }}
+          <div class="entry-body">
+            <h3>{{ p.title }}</h3>
+            {% if p.purpose %}<p class="entry-sub">{{ p.purpose|hl }}</p>{% endif %}
+            <ul class="bullets" aria-label="{{ ui.built }}">
+              {% for f in p.functions %}
+              <li>{{ f|hl }}</li>
+              {% endfor %}
+            </ul>
+            {% if p.challenge %}<p class="entry-note"><span class="note-label">{{ ui.challenge }}:</span> {{ p.challenge|hl }}</p>{% endif %}
+            {% if p.result %}<p class="entry-note"><span class="note-label">{{ ui.result }}:</span> {{ p.result|hl }}</p>{% endif %}
+            <div class="entry-foot">
+              {{ tags(p.stack) }}
+              {% if p.code and p.code.url %}
+              <a class="code-link" href="{{ p.code.url }}" rel="noopener">{{ ui.code_link }} <span aria-hidden="true">↗</span></a>
+              {% elif p.code %}
+              <span class="code-closed">{{ ui.code }}: {{ p.code.text|lower }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <h2 id="experience-title">{{ ui.nav.experience }}</h2>
+      <ol class="entries">
+        {% for x in experience %}
+        <li class="entry">
+          {{ entry_side(x.period, x.status) }}
+          <div class="entry-body">
+            <h3>{{ x.role[0] }} <span class="arrow">→</span> {{ x.role[1] }}</h3>
+            <p class="entry-sub">{{ x.subtitle }}</p>
+            <ul class="bullets" aria-label="{{ ui.did }}">
+              {% for f in x.functions %}
+              <li>{{ f|hl }}</li>
+              {% endfor %}
+            </ul>
+            <div class="entry-foot">{{ tags(x.tags) }}</div>
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    <section class="section" id="stack" aria-labelledby="stack-title">
+      <h2 id="stack-title">{{ ui.nav.stack }}</h2>
+      <dl class="rows">
+        {% for level in stack %}
+        <div class="row">
+          <dt>{{ level.level }}{% if level.note %}<span class="row-note">{{ level.note|hl }}</span>{% endif %}</dt>
+          <dd>{{ tags(level["items"]) }}</dd>
+        </div>
+        {% endfor %}
+      </dl>
+    </section>
+
+    <section class="section" id="strengths" aria-labelledby="strengths-title">
+      <h2 id="strengths-title">{{ ui.nav.strengths }}</h2>
+      <ul class="bullets bullets-wide">
+        {% for s in strengths %}
+        <li>{{ s|hl }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section class="section" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">{{ ui.nav.about }}</h2>
+      <p class="about-text">{{ about.text|hl }}</p>
+      <dl class="rows">
+        {% for f in about.fields %}
+        <div class="row"><dt>{{ f.label }}</dt><dd>{{ f.value|hl }}</dd></div>
+        {% endfor %}
+      </dl>
+      <h3 class="subhead">{{ ui.log }}</h3>
+      <ol class="rows log">
+        {% for e in about.log %}
+        <li class="row"><span class="row-date">{{ e.date }}</span><span>{{ e.event|hl }}</span></li>
+        {% endfor %}
+      </ol>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© {{ year }}</span>
+      <a href="#top">↑ {{ ui.home }}</a>
+    </div>
+  </footer>
+</body>
+</html>

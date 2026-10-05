@@ -1,0 +1,679 @@
+/* Портфоліо: внутрішні системи для бізнесу.
+   Проста сторінка в одну колонку: період зліва, зміст справа.
+   Трохи космосу: зоряне небо на фоні, одна планета й рідкісна комета. Без JavaScript. */
+
+/* ---------- Шрифти (локальні, OFL — див. fonts/OFL-*.txt) ---------- */
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(fonts/manrope-cyrillic.woff2) format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Manrope";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(fonts/manrope-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(fonts/jetbrains-mono-cyrillic.woff2) format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(fonts/jetbrains-mono-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- Кольори ---------- */
+:root {
+  --bg: #07080f;
+  --surface: rgba(20, 23, 38, 0.6);
+  --line: rgba(190, 200, 255, 0.1);
+  --line-hi: rgba(190, 200, 255, 0.2);
+  --text: #e8eaf2;
+  --text-2: #ccd1dd;
+  --muted: #959cb0;
+  --accent: #a9b6ff;
+  --accent-2: #c7a8ff;
+  --on-accent: #0b0d1a;
+
+  /* Підсвітка термінів у тексті */
+  --t-fn: #93b2ff;
+  --t-type: #77d4e4;
+  --t-num: #f2ad85;
+  --t-str: #a2db82;
+  --t-kw: #cdb0ff;
+
+  --prod: #8ddca1;
+  --demo: #f0bd72;
+  --done: #959cb0;
+
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+
+/* ---------- База ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 450;
+  line-height: 1.6;
+  overflow-x: clip;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+p, ul, ol, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.wrap {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 50;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+/* Підсвітка термінів (ставить фільтр hl у build.py) */
+.t-fn { color: var(--t-fn); font-family: var(--mono); font-size: 0.88em; }
+.t-type { color: var(--t-type); font-family: var(--mono); font-size: 0.86em; }
+.t-num { color: var(--t-num); font-family: var(--mono); font-size: 0.9em; }
+.t-str { color: var(--t-str); }
+.t-kw { color: var(--t-kw); font-weight: 600; }
+
+/* ---------- Аврора: м'яке світіння вгорі сторінки ----------
+   Кольорові плями з радіальних градієнтів (без filter: blur — дешево для відеокарти),
+   повільно дрейфують і згасають донизу. Під текстом немає дрібних деталей, тож він лишається чітким. */
+.aurora {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 900px;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
+  mask-image: linear-gradient(to bottom, #000 40%, transparent);
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.blob-1 {
+  top: -260px;
+  right: -12%;
+  width: min(760px, 130vw);
+  height: 620px;
+  background: radial-gradient(closest-side, rgba(124, 92, 255, 0.42), transparent);
+  animation: aurora-1 22s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+  top: -200px;
+  left: -18%;
+  width: min(640px, 120vw);
+  height: 520px;
+  background: radial-gradient(closest-side, rgba(56, 104, 255, 0.3), transparent);
+  animation: aurora-2 28s ease-in-out infinite alternate;
+}
+
+.blob-3 {
+  top: 120px;
+  right: 18%;
+  width: min(520px, 100vw);
+  height: 360px;
+  background: radial-gradient(closest-side, rgba(40, 210, 200, 0.14), transparent);
+  animation: aurora-3 34s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-1 {
+  to { transform: translate(-14%, 60px) scale(1.12); }
+}
+
+@keyframes aurora-2 {
+  to { transform: translate(18%, 40px) scale(0.92); }
+}
+
+@keyframes aurora-3 {
+  to { transform: translate(-30%, -50px) scale(1.2); }
+}
+
+/* ---------- Вступ ---------- */
+.intro {
+  position: relative;
+  padding: 28px 0 44px;
+}
+
+@media (min-width: 640px) {
+  .intro {
+    padding: 36px 0 60px;
+  }
+}
+
+/* Перемикач мови — маленький підпис у кутку, без смуги-хедера */
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 72px;
+  padding: 4px 2px;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .lang-switch {
+    margin-bottom: 96px;
+  }
+}
+
+.lang-current { color: var(--text); font-weight: 600; }
+.lang-sep { color: var(--muted); }
+.lang-other {
+  color: var(--muted);
+  border-bottom: 1px dashed transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.lang-switch:hover .lang-other {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Планета з місяцем на еліптичній орбіті.
+   Кут --a анімується через @property, позиція рахується через cos()/sin();
+   у ближній половині орбіти місяць іде перед планетою, у дальній — за нею. */
+.intro-planet {
+  --w: 64px;
+  position: absolute;
+  top: 34px;
+  right: calc(var(--w) * 0.55);
+  width: var(--w);
+  aspect-ratio: 1;
+  isolation: isolate;
+  animation: drift 9s ease-in-out infinite alternate;
+}
+
+@media (min-width: 640px) {
+  .intro-planet {
+    --w: 132px;
+    top: 84px;
+  }
+}
+
+.intro-planet .planet {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(140, 120, 255, 0.4));
+}
+
+.orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: calc(var(--w) * 2);
+  height: calc(var(--w) * 0.62);
+  border: 1px solid rgba(201, 184, 255, 0.18);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(14deg);
+}
+
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 30deg;
+}
+
+.moon {
+  --rx: var(--w);
+  --ry: calc(var(--w) * 0.31);
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: calc(var(--w) * 0.12);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #cfc8ee 55%, #8a84ad);
+  box-shadow: 0 0 10px rgba(200, 190, 255, 0.55);
+  transform:
+    translate(-50%, -50%)
+    rotate(14deg)
+    translate(calc(cos(var(--a)) * var(--rx)), calc(sin(var(--a)) * var(--ry)))
+    rotate(-14deg);
+  animation:
+    moon-orbit 14s linear infinite,
+    moon-depth 14s step-end infinite;
+}
+
+/* Місяць показуємо лише там, де браузер уміє cos()/sin() */
+@supports (top: calc(cos(0deg) * 1px)) {
+  .moon {
+    display: block;
+  }
+}
+
+@keyframes moon-orbit {
+  from { --a: 0deg; }
+  to { --a: 360deg; }
+}
+
+/* 0°→180° — ближня (нижня) половина орбіти, місяць перед планетою; 180°→360° — за нею */
+@keyframes moon-depth {
+  0% { z-index: 2; }
+  50% { z-index: 0; }
+  100% { z-index: 0; }
+}
+
+@keyframes drift {
+  to { transform: translateY(10px); }
+}
+
+.intro h1 {
+  max-width: 15ch;
+  font-size: clamp(2rem, 6vw, 2.9rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+
+.accent {
+  display: block;
+  width: fit-content;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.lead {
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.intro-text {
+  max-width: 60ch;
+  color: var(--text-2);
+  margin-bottom: 28px;
+}
+
+/* Навігація-«сузір'я»: розділи в рядок, кожен позначено зірочкою */
+.constellation {
+  margin-top: 30px;
+}
+
+.constellation ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  list-style: none;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+/* Зірочка перед кожним пунктом — рядок переноситься без «висячих» роздільників */
+.constellation li::before {
+  content: "✦";
+  margin-right: 8px;
+  color: var(--accent);
+  font-size: 0.62rem;
+  opacity: 0.6;
+}
+
+.constellation a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.constellation a:hover {
+  color: var(--text);
+}
+
+/* ---------- Секції ---------- */
+.section {
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+
+.section h2 {
+  margin-bottom: 24px;
+  font-size: 0.8rem;
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ---------- Записи: період зліва, зміст справа ---------- */
+.entries {
+  display: grid;
+  gap: 32px;
+  list-style: none;
+}
+
+.entry {
+  display: grid;
+  gap: 6px;
+}
+
+@media (min-width: 640px) {
+  .entry {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+.entry-side {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 640px) {
+  .entry-side {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 4px;
+  }
+}
+
+.entry-date {
+  color: var(--muted);
+  font-family: var(--mono);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+}
+
+.status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-prod { color: var(--prod); }
+.status-prod::before { box-shadow: 0 0 8px currentColor; }
+.status-demo { color: var(--demo); }
+.status-done { color: var(--done); }
+
+.entry h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.arrow {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.entry-sub {
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+
+.bullets {
+  display: grid;
+  gap: 4px;
+  list-style: none;
+  color: var(--text-2);
+  font-size: 0.94rem;
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 18px;
+}
+
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.68em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.7;
+}
+
+.bullets-wide {
+  gap: 8px;
+  font-size: 1rem;
+}
+
+@media (min-width: 640px) {
+  .bullets-wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+}
+
+.entry-note {
+  margin-top: 10px;
+  color: var(--text-2);
+  font-size: 0.94rem;
+}
+
+.note-label {
+  color: var(--muted);
+}
+
+.entry-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 12px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+.tags li {
+  padding: 2px 9px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text-2);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.code-link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.code-closed {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+}
+
+/* ---------- Рядки «назва — значення» (стек, факти, журнал) ---------- */
+.rows {
+  display: grid;
+  gap: 14px;
+  list-style: none;
+}
+
+.row {
+  display: grid;
+  gap: 6px;
+}
+
+@media (min-width: 640px) {
+  .row {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+.row dt {
+  font-weight: 600;
+}
+
+.row-note {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
+.row-date {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  padding-top: 2px;
+}
+
+.about-text {
+  max-width: 62ch;
+  margin-bottom: 24px;
+  font-size: 1.05rem;
+}
+
+.subhead {
+  margin: 32px 0 14px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ---------- Підвал ---------- */
+.footer {
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer a {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--accent);
+}
+
+/* ---------- Менше руху, якщо користувач так просить ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
