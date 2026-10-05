@@ -62,10 +62,6 @@
       <h1 id="intro-title">{{ ui.h1[0] }} <span class="accent">{{ ui.h1[1] }}</span></h1>
       <p class="lead">{{ hero.lead|hl }}</p>
       <p class="intro-text">{{ hero.text|hl }}</p>
-      <div class="actions">
-        <a class="button" href="{{ contacts.telegram.url }}" rel="noopener">{{ ui.cta }} <span aria-hidden="true">→</span><span class="visually-hidden"> {{ ui.cta_sr }}</span></a>
-        <span class="handle">Telegram {{ contacts.telegram.handle }}</span>
-      </div>
       {# Навігація-«сузір'я»: розділи сторінки, розділені зірочками #}
       <nav class="constellation" aria-label="{{ ui.nav_label }}">
         <ul>

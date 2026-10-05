@@ -107,7 +107,6 @@ def build() -> None:
         root = "" if code == "uk" else "../"
         html = env.get_template("index.html").render(
             **lang,
-            contacts=content.CONTACTS,
             root=root,
             site_url=site_url,
             page_url=site_url + ("" if code == "uk" else "en/"),

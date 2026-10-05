@@ -5,10 +5,6 @@
 Структура UK і EN однакова: що додаєш в одну мову, додай і в іншу.
 """
 
-CONTACTS = {
-    "telegram": {"label": "Telegram", "handle": "@D0SIDE0", "url": "https://t.me/D0SIDE0"},
-}
-
 # Стек проєктів однаковий для обох мов.
 CRM_STACK = ["PostgreSQL", "Telegram Bot API", "Linux", "Nginx", "PM2", "TypeScript (AI-assisted)"]
 VF_STACK = ["Next.js", "TypeScript", "Prisma", "SQLite", "Leaflet", "Playwright (E2E)"]
@@ -51,8 +47,6 @@ UK = {
         },
         "lang_switch": {"label": "EN", "title": "English version", "href": "en/", "hreflang": "en"},
         "h1": ["Внутрішні системи", "для бізнесу"],
-        "cta": "Написати",
-        "cta_sr": "в Telegram",
         "built": "Що зроблено",
         "did": "Що зроблено",
         "challenge": "Що було складним",
@@ -266,8 +260,6 @@ EN = {
         },
         "lang_switch": {"label": "UA", "title": "Українська версія", "href": "../", "hreflang": "uk"},
         "h1": ["Internal systems", "for business"],
-        "cta": "Message me",
-        "cta_sr": "on Telegram",
         "built": "What I built",
         "did": "What I did",
         "challenge": "What was hard",

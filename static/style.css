@@ -375,41 +375,9 @@ a {
   margin-bottom: 28px;
 }
 
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px 20px;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  padding: 10px 22px;
-  border-radius: 10px;
-  background: var(--accent);
-  color: var(--on-accent);
-  font-weight: 700;
-  text-decoration: none;
-  transition: background 0.2s, translate 0.2s;
-}
-
-.button:hover {
-  background: #c3cbff;
-  translate: 0 -1px;
-}
-
-.handle {
-  color: var(--muted);
-  font-family: var(--mono);
-  font-size: 0.85rem;
-}
-
 /* Навігація-«сузір'я»: розділи в рядок, кожен позначено зірочкою */
 .constellation {
-  margin-top: 36px;
+  margin-top: 30px;
 }
 
 .constellation ul {
