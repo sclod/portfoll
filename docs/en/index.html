@@ -28,14 +28,13 @@
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
 
   <link rel="preload" href="../fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="../style.css?v=51fbfa3f68">
+  <link rel="stylesheet" href="../style.css?v=a5bf24d5cf">
 </head>
 <body>
-  <div class="sky" aria-hidden="true">
-    <span class="stars stars-1"></span>
-    <span class="stars stars-2"></span>
-    <span class="stars stars-3"></span>
-    <span class="comet"></span>
+  <div class="aurora" aria-hidden="true">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
   </div>
 
   <a class="skip-link" href="#main">Skip to content</a>
@@ -45,8 +44,11 @@
       <a class="lang-switch" href="../" hreflang="uk" lang="uk" title="Українська версія">
         <span class="lang-current" aria-hidden="true">EN</span><span class="lang-sep" aria-hidden="true">·</span><span class="lang-other">UA</span><span class="visually-hidden"> — Українська версія</span>
       </a>
-      <span class="planet-stars" aria-hidden="true"></span>
-      <div class="intro-planet"><svg class="planet" viewBox="0 0 120 120" width="132" height="132" aria-hidden="true"><defs><linearGradient id="planet-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#planet-hero)"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg></div>
+      <div class="intro-planet" aria-hidden="true">
+        <span class="orbit"></span>
+        <svg class="planet" viewBox="0 0 120 120" width="132" height="132" aria-hidden="true"><defs><linearGradient id="planet-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9c6ff"/><stop offset=".55" stop-color="#8b7dff"/><stop offset="1" stop-color="#4a3aa8"/></linearGradient></defs><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 1 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".45" stroke-width="3"/></g><circle cx="60" cy="60" r="32" fill="url(#planet-hero)"/><circle cx="50" cy="50" r="5" fill="#fff" fill-opacity=".12"/><circle cx="70" cy="70" r="3" fill="#fff" fill-opacity=".1"/><g transform="rotate(-18 60 60)"><path d="M6 60a54 13 0 0 0 108 0" fill="none" stroke="#c9b8ff" stroke-opacity=".8" stroke-width="3"/></g></svg>
+        <span class="moon"></span>
+      </div>
       <h1 id="intro-title">Internal systems <span class="accent">for business</span></h1>
       <p class="lead">CRM, <span class="t-fn">Telegram</span> bots, integrations, routine automation.</p>
       <p class="intro-text">Core: <span class="t-fn">Python</span> and <span class="t-fn">SQL</span>. I build the web part with heavy use of AI tools: I set the task, review the result, debug, and take responsibility for how it runs <span class="t-str">in production</span>.</p>

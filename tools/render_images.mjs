@@ -18,25 +18,18 @@ const fonts = [
   font("JetBrains Mono", "jetbrains-mono-cyrillic.woff2", "400 600"), font("JetBrains Mono", "jetbrains-mono-latin.woff2", "400 600"),
 ].join("\n");
 
-// Детерміновані «зірки» для фону.
-let seed = 7;
-const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-const stars = Array.from({ length: 90 }, () =>
-  `<i style="left:${(rnd() * 1200).toFixed(0)}px;top:${(rnd() * 630).toFixed(0)}px;width:${(1 + rnd() * 2).toFixed(1)}px;opacity:${(0.3 + rnd() * 0.7).toFixed(2)}"></i>`).join("");
-
 const planet = favicon.replace(/<rect[^>]*\/>/, "").replace(/<circle cx="(12|52|50)"[^>]*\/>/g, "");
 
 const og = (t) => `<!doctype html><html lang="${t.lang}"><meta charset="utf-8"><style>${fonts}
   body { margin: 0; width: 1200px; height: 630px; overflow: hidden; position: relative; color: #e8eaf2;
-         background: radial-gradient(ellipse 70% 60% at 90% 0%, rgba(120,100,255,.22), transparent 70%), #07080f;
+         background: radial-gradient(ellipse 55% 70% at 88% 0%, rgba(124,92,255,.42), transparent 70%), radial-gradient(ellipse 45% 60% at 5% 0%, rgba(56,104,255,.3), transparent 70%), radial-gradient(ellipse 35% 40% at 70% 70%, rgba(40,210,200,.12), transparent 70%), #07080f;
          font-family: "Manrope", sans-serif; box-sizing: border-box; padding: 0 90px; display: flex; flex-direction: column; justify-content: center; }
-  i { position: absolute; aspect-ratio: 1; border-radius: 50%; background: #fff; }
   h1 { font-size: 76px; font-weight: 700; line-height: 1.08; letter-spacing: -2px; margin: 0 0 28px; }
   h1 span { display: block; background: linear-gradient(90deg, #a9b6ff, #c7a8ff); -webkit-background-clip: text; color: transparent; }
   p { font-size: 32px; margin: 0; color: #c3c8d6; font-weight: 500; }
   .fn { font-family: "JetBrains Mono", monospace; color: #93b2ff; font-size: .9em; }
   svg { position: absolute; right: 110px; top: 120px; width: 230px; height: 230px; filter: drop-shadow(0 0 40px rgba(140,120,255,.45)); }
-</style><body>${stars}${planet}
+</style><body>${planet}
   <h1>${t.h1a} <span>${t.h1b}</span></h1>
   <p>${t.text}</p>
 </body></html>`;

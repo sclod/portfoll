@@ -85,6 +85,7 @@ body {
   font-size: 1rem;
   font-weight: 450;
   line-height: 1.6;
+  overflow-x: clip;
 }
 
 h1, h2, h3 {
@@ -147,96 +148,65 @@ a {
 .t-str { color: var(--t-str); }
 .t-kw { color: var(--t-kw); font-weight: 600; }
 
-/* ---------- Зоряне небо ---------- */
-.sky {
-  position: fixed;
-  inset: 0;
+/* ---------- Аврора: м'яке світіння вгорі сторінки ----------
+   Кольорові плями з радіальних градієнтів (без filter: blur — дешево для відеокарти),
+   повільно дрейфують і згасають донизу. Під текстом немає дрібних деталей, тож він лишається чітким. */
+.aurora {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 900px;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 45% at 85% -5%, rgba(120, 100, 255, 0.14), transparent 70%),
-    radial-gradient(ellipse 60% 40% at 0% 0%, rgba(80, 140, 255, 0.08), transparent 70%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent);
+  mask-image: linear-gradient(to bottom, #000 40%, transparent);
 }
 
-/* Зірки ніколи не лежать під текстом: смуга колонки з текстом прозора.
-   На телефоні колонка займає весь екран, тож фонових зірок там немає —
-   лише невелике скупчення біля планети (.planet-stars). */
-.stars {
+.blob {
   position: absolute;
-  inset: 0;
-  -webkit-mask-image: linear-gradient(90deg, #000 calc(50% - 480px), transparent calc(50% - 410px), transparent calc(50% + 410px), #000 calc(50% + 480px));
-  mask-image: linear-gradient(90deg, #000 calc(50% - 480px), transparent calc(50% - 410px), transparent calc(50% + 410px), #000 calc(50% + 480px));
+  border-radius: 50%;
+  will-change: transform;
 }
 
-.stars-1 {
-  background-image:
-    radial-gradient(1px 1px at 57px 12px, rgba(255,255,255,0.63) 50%, transparent 100%),
-    radial-gradient(1px 1px at 125px 114px, rgba(255,255,255,0.46) 50%, transparent 100%),
-    radial-gradient(1px 1px at 52px 44px, rgba(255,255,255,0.59) 50%, transparent 100%),
-    radial-gradient(1px 1px at 16px 15px, rgba(255,255,255,0.45) 50%, transparent 100%),
-    radial-gradient(1px 1px at 119px 258px, rgba(255,255,255,0.59) 50%, transparent 100%),
-    radial-gradient(1px 1px at 101px 214px, rgba(255,255,255,0.48) 50%, transparent 100%),
-    radial-gradient(1px 1px at 142px 3px, rgba(255,255,255,0.63) 50%, transparent 100%),
-    radial-gradient(1px 1px at 81px 216px, rgba(255,255,255,0.52) 50%, transparent 100%),
-    radial-gradient(1px 1px at 79px 110px, rgba(255,255,255,0.69) 50%, transparent 100%),
-    radial-gradient(1px 1px at 172px 52px, rgba(255,255,255,0.45) 50%, transparent 100%),
-    radial-gradient(1px 1px at 49px 183px, rgba(255,255,255,0.66) 50%, transparent 100%),
-    radial-gradient(1px 1px at 235px 22px, rgba(255,255,255,0.62) 50%, transparent 100%),
-    radial-gradient(1px 1px at 213px 193px, rgba(255,255,255,0.44) 50%, transparent 100%),
-    radial-gradient(1px 1px at 230px 145px, rgba(255,255,255,0.58) 50%, transparent 100%);
-  background-size: 260px 260px;
+.blob-1 {
+  top: -260px;
+  right: -12%;
+  width: min(760px, 130vw);
+  height: 620px;
+  background: radial-gradient(closest-side, rgba(124, 92, 255, 0.42), transparent);
+  animation: aurora-1 22s ease-in-out infinite alternate;
 }
 
-.stars-2 {
-  background-image:
-    radial-gradient(1.5px 1.5px at 360px 35px, rgba(255,255,255,0.53) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 116px 395px, rgba(255,255,255,0.61) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 40px 119px, rgba(220,225,255,0.8) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 194px 142px, rgba(255,255,255,0.66) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 286px 233px, rgba(255,255,255,0.64) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 107px 343px, rgba(255,255,255,0.6) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 349px 331px, rgba(210,200,255,0.53) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 325px 87px, rgba(255,255,255,0.69) 50%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 225px 283px, rgba(255,255,255,0.67) 50%, transparent 100%);
-  background-size: 420px 420px;
-  animation: twinkle 7s ease-in-out infinite alternate;
+.blob-2 {
+  top: -200px;
+  left: -18%;
+  width: min(640px, 120vw);
+  height: 520px;
+  background: radial-gradient(closest-side, rgba(56, 104, 255, 0.3), transparent);
+  animation: aurora-2 28s ease-in-out infinite alternate;
 }
 
-.stars-3 {
-  background-image:
-    radial-gradient(2px 2px at 276px 570px, rgba(255,255,255,0.65) 50%, transparent 100%),
-    radial-gradient(2px 2px at 332px 57px, rgba(220,215,255,0.66) 50%, transparent 100%),
-    radial-gradient(2px 2px at 32px 323px, rgba(255,255,255,0.72) 50%, transparent 100%),
-    radial-gradient(2px 2px at 467px 216px, rgba(255,255,255,0.92) 50%, transparent 100%),
-    radial-gradient(2px 2px at 580px 422px, rgba(200,215,255,0.65) 50%, transparent 100%);
-  background-size: 620px 620px;
-  animation: twinkle 11s ease-in-out infinite alternate-reverse;
+.blob-3 {
+  top: 120px;
+  right: 18%;
+  width: min(520px, 100vw);
+  height: 360px;
+  background: radial-gradient(closest-side, rgba(40, 210, 200, 0.14), transparent);
+  animation: aurora-3 34s ease-in-out infinite alternate;
 }
 
-@keyframes twinkle {
-  from { opacity: 1; }
-  to { opacity: 0.35; }
+@keyframes aurora-1 {
+  to { transform: translate(-14%, 60px) scale(1.12); }
 }
 
-/* Комета: пролітає раз на ~16 секунд */
-.comet {
-  position: absolute;
-  top: 90px;
-  right: -160px;
-  width: 140px;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.9), transparent);
-  transform: rotate(-28deg);
-  opacity: 0;
-  animation: comet 16s linear 4s infinite;
+@keyframes aurora-2 {
+  to { transform: translate(18%, 40px) scale(0.92); }
 }
 
-@keyframes comet {
-  0% { opacity: 0; transform: rotate(-28deg) translateX(0); }
-  1% { opacity: 1; }
-  7% { opacity: 0; transform: rotate(-28deg) translateX(-720px); }
-  100% { opacity: 0; transform: rotate(-28deg) translateX(-720px); }
+@keyframes aurora-3 {
+  to { transform: translate(-30%, -50px) scale(1.2); }
 }
 
 /* ---------- Вступ ---------- */
@@ -282,71 +252,98 @@ a {
   border-bottom-color: var(--accent);
 }
 
+/* Планета з місяцем на еліптичній орбіті.
+   Кут --a анімується через @property, позиція рахується через cos()/sin();
+   у ближній половині орбіти місяць іде перед планетою, у дальній — за нею. */
 .intro-planet {
+  --w: 64px;
   position: absolute;
   top: 34px;
-  right: 0;
-  width: 64px;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 24px rgba(140, 120, 255, 0.35));
+  right: calc(var(--w) * 0.55);
+  width: var(--w);
+  aspect-ratio: 1;
+  isolation: isolate;
   animation: drift 9s ease-in-out infinite alternate;
-}
-
-.planet-stars {
-  position: absolute;
-  top: 14px;
-  right: 24px;
-  pointer-events: none;
-}
-
-.planet-stars::before,
-.planet-stars::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-}
-
-.planet-stars::before {
-  width: 1.5px;
-  height: 1.5px;
-  box-shadow:
-    -150px 24px rgba(255, 255, 255, 0.7),
-    -118px 62px rgba(255, 255, 255, 0.5),
-    -96px 8px rgba(255, 255, 255, 0.8),
-    -70px 88px rgba(255, 255, 255, 0.45),
-    -40px 30px rgba(255, 255, 255, 0.6),
-    -8px 94px rgba(255, 255, 255, 0.5),
-    14px 6px rgba(255, 255, 255, 0.7),
-    -178px 70px rgba(255, 255, 255, 0.4);
-  animation: twinkle 6s ease-in-out infinite alternate;
-}
-
-.planet-stars::after {
-  width: 2px;
-  height: 2px;
-  box-shadow:
-    -132px 40px rgba(225, 225, 255, 0.9),
-    -54px 58px rgba(255, 255, 255, 0.8),
-    6px 40px rgba(210, 200, 255, 0.85),
-    -196px 14px rgba(255, 255, 255, 0.7);
-  animation: twinkle 9s ease-in-out infinite alternate-reverse;
-}
-
-.intro-planet .planet {
-  width: 100%;
-  height: auto;
 }
 
 @media (min-width: 640px) {
   .intro-planet {
+    --w: 132px;
     top: 84px;
-    right: 0;
-    width: 132px;
   }
 }
 
+.intro-planet .planet {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(140, 120, 255, 0.4));
+}
+
+.orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: calc(var(--w) * 2);
+  height: calc(var(--w) * 0.62);
+  border: 1px solid rgba(201, 184, 255, 0.18);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(14deg);
+}
+
+@property --a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 30deg;
+}
+
+.moon {
+  --rx: var(--w);
+  --ry: calc(var(--w) * 0.31);
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: calc(var(--w) * 0.12);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff, #cfc8ee 55%, #8a84ad);
+  box-shadow: 0 0 10px rgba(200, 190, 255, 0.55);
+  transform:
+    translate(-50%, -50%)
+    rotate(14deg)
+    translate(calc(cos(var(--a)) * var(--rx)), calc(sin(var(--a)) * var(--ry)))
+    rotate(-14deg);
+  animation:
+    moon-orbit 14s linear infinite,
+    moon-depth 14s step-end infinite;
+}
+
+/* Місяць показуємо лише там, де браузер уміє cos()/sin() */
+@supports (top: calc(cos(0deg) * 1px)) {
+  .moon {
+    display: block;
+  }
+}
+
+@keyframes moon-orbit {
+  from { --a: 0deg; }
+  to { --a: 360deg; }
+}
+
+/* 0°→180° — ближня (нижня) половина орбіти, місяць перед планетою; 180°→360° — за нею */
+@keyframes moon-depth {
+  0% { z-index: 2; }
+  50% { z-index: 0; }
+  100% { z-index: 0; }
+}
+
 @keyframes drift {
-  to { transform: translateY(10px) rotate(4deg); }
+  to { transform: translateY(10px); }
 }
 
 .intro h1 {
